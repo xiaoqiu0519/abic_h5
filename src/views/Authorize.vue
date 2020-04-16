@@ -2,108 +2,90 @@
   <div class="houselist">
     <Header :title="context.navtype[getlanguage][3]"></Header>
     <div class="nav">
-        <span :class="{'navcolor':navindex == 0}" @click="clicknav(0)">出售</span>
-        <span :class="{'navcolor':navindex == 1}" @click="clicknav(1)">租赁</span>
+        <span :class="{'navcolor':navindex == 0}" @click="clicknav(0)">{{getlanguage == 0 ? "出售" : "rent"}}</span>
+        <span :class="{'navcolor':navindex == 1}" @click="clicknav(1)">{{getlanguage == 0 ? "租赁" : "sell"}}</span>
     </div>
     <div class="houseform">
         <div class="inputdiv">
-            <span><i> * </i> 姓名</span>
-            <input type="text" placeholder="请输入姓名">
+            <span><i> * </i> {{tabtext[getlanguage].username}}</span>
+            <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].username">
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 电话</span>
-            <input type="text" placeholder="请输入电话">
+            <span><i> * </i> {{tabtext[getlanguage].telphone}}</span>
+             <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].telphone">
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 邮箱</span>
-            <input type="text" placeholder="请输入邮箱">
+            <span><i> * </i> {{tabtext[getlanguage].email}}</span>
+            <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].email">
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 楼盘名称</span>
-            <input type="text" placeholder="请输入楼盘名称">
+            <span><i> * </i> {{tabtext[getlanguage].title}}</span>
+            <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].title">
         </div>
         <div class="inputradio">
-            <span><i> * </i> 房屋类型</span>
+            <span><i> * </i> {{tabtext[getlanguage].type}}</span>
             <div class="radiolist">
-                <span><input type="radio" name="housetype" id="">公寓</span>
-                <span><input type="radio" name="housetype" id="">旺铺</span>
-                <span><input type="radio" name="housetype" id="">办公室</span>
-                <span><input type="radio" name="housetype" id="">土地</span>
+                <span v-for="(list,index) in usedArr[getlanguage]" :key="index"><input type="radio" name="housetype" id="">{{list}}</span>
             </div>
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 单元号&门牌号</span>
-            <input type="text" placeholder="请输入单元号&门牌号">
+            <span><i> * </i> {{tabtext[getlanguage].tower}}</span>
+            <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].tower">
         </div>
         <div class="inputradio">
-            <span><i> * </i> 户型</span>
+            <span><i> * </i> {{tabtext[getlanguage].layout}}</span>
             <div class="radiolist">
-                <span><input type="radio" name="layout" id="">单间</span>
-                <span><input type="radio" name="layout" id="">1室1厅</span>
-                <span><input type="radio" name="layout" id="">2室1厅</span>
-                <span><input type="radio" name="layout" id="">3室1厅</span>
-                <span><input type="radio" name="layout" id="">其它</span>
+                <span v-for="(list,index) in layoutArr[getlanguage]" :key="index">
+                    <input type="radio" name="layout" id="">{{list}}
+                </span>
             </div>
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 面积</span>
-            <input type="text" placeholder="请输入房产面积">
+            <span><i> * </i> {{tabtext[getlanguage].size}}</span>
+            <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].size">
             <i>m²</i>
         </div>
         <div class="inputradio">
-            <span><i> * </i> 朝向</span>
+            <span><i> * </i> {{tabtext[getlanguage].faceto}}</span>
             <div class="radiolist">
-                <span><input type="radio" name="face" id="">东</span>
-                <span><input type="radio" name="face" id="">南</span>
-                <span><input type="radio" name="face" id="">西</span>
-                <span><input type="radio" name="face" id="">北</span>
+                <span v-for="(list,index) in faceToArr[getlanguage]" :key="index"><input type="radio" name="housetype" id="">{{list}}</span>
             </div>
         </div>
         <div class="inputradio">
-            <span><i> * </i> 阳台</span>
+            <span><i> * </i> {{tabtext[getlanguage].balcony}}</span>
             <div class="radiolist">
-                <span><input type="radio" name="balcony" id="">有</span>
-                <span><input type="radio" name="balcony" id="">无</span>
+                <span><input type="radio" name="balcony" id="">{{getlanguage==0?'有':'Y'}}</span>
+                <span><input type="radio" name="balcony" id="">{{getlanguage==0?'无':'N'}}</span>
             </div>
         </div>
         <div class="inputradio">
-            <span><i> * </i> 车位</span>
+            <span><i> * </i> {{tabtext[getlanguage].parking}}</span>
             <div class="radiolist">
-                <span><input type="radio" name="parking" id="">有</span>
-                <span><input type="radio" name="parking" id="">无</span>
+                <span><input type="radio" name="parking" id="">{{getlanguage==0?'有':'Y'}}</span>
+                <span><input type="radio" name="parking" id="">{{getlanguage==0?'无':'N'}}</span>
             </div>
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 预期售价</span>
-            <input type="text" placeholder="请输入预期售价">
+            <span><i> * </i> {{tabtext[getlanguage].sellingprice}}</span>
+            <input type="text" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].sellingprice">
         </div>
         <div class="inputradio">
-            <span><i> * </i> 付款方式</span>
+            <span><i> * </i> {{tabtext[getlanguage].payment}}</span>
             <div class="radiolist">
-                <span><input type="radio" name="payment" id="">压2付6</span>
-                <span><input type="radio" name="payment" id="">压2付1年</span>
-                <span><input type="radio" name="payment" id="">2+2+预付支票</span>
-                <span><input type="radio" name="payment" id="">其他</span>
+                <span v-for="(list,index) in paymentArr[getlanguage][navindex+1]" :key="index"><input type="radio" name="housetype" id="">{{list}}</span>
             </div>
         </div>
         <div class="textarea">
-            <span>备注</span>
-            <textarea name="beizhu" placeholder="300字以内"></textarea>
+            <span>{{tabtext[getlanguage].notes}}</span>
+            <textarea name="beizhu" :placeholder="getlanguage==0 ? '300字以内' : 'Within 300 words'"></textarea>
         </div>
         <div class="inputradio">
-            <span><i> * </i> 家具</span>
+            <span><i> * </i> {{tabtext[getlanguage].furniture}}</span>
             <div class="radiolist">
-                <span><input type="checkbox" v-model="furniture" value="1" id="">洗衣机</span>
-                <span><input type="checkbox" v-model="furniture" value="2" id="">热水器</span>
-                <span><input type="checkbox" v-model="furniture" value="3" id="">冰箱</span>
-                <span><input type="checkbox" v-model="furniture" value="4" id="">电视机</span>
-                <span><input type="checkbox" v-model="furniture" value="5" id="">桌椅</span>
-                <span><input type="checkbox" v-model="furniture" value="6" id="">沙发</span>
-                <span><input type="checkbox" v-model="furniture" value="7" id="">茶几</span>
-                <span><input type="checkbox" v-model="furniture" value="8" id="">床</span>
+                <span v-for="(list,index) in furnitureArr[getlanguage]" :key="index"><input type="checkbox" v-model="furniture" :value="index" id="">{{list}}</span>
             </div> 
         </div>
-        <div class="btn">确认提交</div>
+        <div class="btn">{{commitbtn[getlanguage]}}</div>
     </div>
   </div>
 </template>
@@ -112,12 +94,63 @@ import {mapGetters} from 'vuex'
 import Header from '../components/header'
 export default {
   computed:{
-    ...mapGetters(['getlanguage'])
+    ...mapGetters([
+        'getlanguage',
+        'layoutArr',
+        'furnitureArr',
+        'usedArr',
+        'faceToArr',
+        'paymentArr'
+        ])
   },
   data(){
       return{
           navindex:0,
-          furniture:[1,2,3,4,5]
+          furniture:[1,2,3,5],
+          pleaseenter:{
+              0:'请输入',
+              1:'please enter'
+          },
+          commitbtn:{
+              0:'确认提交',
+              1:'submission'
+          },
+          tabtext:{
+              0:{
+                    username:'姓名',
+                    telphone:'电话',
+                    email:'邮箱',
+                    title:'楼盘名称',
+                    type:'房屋类型',
+                    tower:'单元号&门牌号',
+                    layout:'户型',
+                    size:'面积',
+                    faceto:'朝向',
+                    balcony:'阳台',
+                    parking:'车位',
+                    sellingprice:'预售价格',
+                    payment:"支付方式",
+                    notes:'备注',
+                    furniture:'家具',
+              },
+              1:{
+                    username:'name',
+                    telphone:'contact no',
+                    email:'email',
+                    title:'project name',
+                    type:'type',
+                    tower:'tower/unit no',
+                    layout:'layout',
+                    size:'size',
+                    faceto:'face to',
+                    balcony:'balcony',
+                    parking:'parking slot',
+                    sellingprice:'selling price',
+                    payment:"payment",
+                    notes:'notes',
+                    furniture:'furniture',
+              }
+          }
       }
   },
   components:{

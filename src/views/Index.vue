@@ -146,28 +146,12 @@ export default {
         require('../assets/index/swhz.png'),
         require('../assets/index/gywm.png'),
       ],
-      layoutArr:{
-        0:{
-          1:'单间',
-          2:'1室1厅',
-          3:'2室1厅',
-          4:'3室1厅',
-          5:'其它',
-        },
-        1:{
-          1:'studio',
-          2:'1BR',
-          3:'2BR',
-          4:'3BR',
-          5:'others'
-        }
-      },
       selectflag:false,
       cityparams:''
     }
   },
   computed:{
-    ...mapGetters(['getlanguage'])
+    ...mapGetters(['getlanguage','layoutArr'])
   },
   components:{
     translation,
