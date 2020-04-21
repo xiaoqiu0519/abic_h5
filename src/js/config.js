@@ -65,7 +65,7 @@ export function get(url, params = {}, isForm = false) {
             resolve(response)
         }).catch(error => {
             store.dispatch('changeloadingAsy', false);
-            store.dispatch('changeshowerrorAsy');
+            //store.dispatch('changeshowerrorAsy');
             reject(error)
         })
     })

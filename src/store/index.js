@@ -117,7 +117,7 @@ export default new Vuex.Store({
                 2: { // 租赁
                     1: '2+6',
                     2: '2+12',
-                    3: '2+2+PDc',
+                    3: '2+2+PDC',
                     4: 'others'
                 },
                 3: {

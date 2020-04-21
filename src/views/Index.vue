@@ -70,7 +70,7 @@
         <Nodata></Nodata>
       </div>
     </div>
-    <div class="shadebox" v-if="selectflag">
+    <div class="cityshadebox" v-if="selectflag">
       <div class="content">
         <div class="title">
           <span>{{context.areatitle[getlanguage]}}</span>
@@ -292,37 +292,6 @@ export default {
       margin-left 0.5rem;
       font-size 0.14rem;
       font-weight 600;
-  .selectaddress
-    height 0.4rem;
-    margin-left 3%;
-    line-height 0.4rem;
-    font-size 0.16rem;
-    position relative;
-    .con
-      display flex;
-      align-items center;
-      span
-        max-width 2rem;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      .icon
-        width 0.24rem;
-        margin-right 0.1rem;
-      .selectimg
-        width 0.12rem; 
-        margin-left 0.06rem;     
-    ul
-      width 100%;
-      position absolute;
-      left 0;
-      top 0.4rem;
-      line-height 0.3rem;
-      background red;  
-      text-align center;
-      background white;
-      li
-        border-bottom 1px solid #f0f0f0;
   .navcon
     width: 100%;
     margin: 0.1rem auto 0;
@@ -370,64 +339,4 @@ export default {
       .price
         color: #fa5741;
         font-weight: 600;  
-  .shadebox
-    width 100%;
-    height 100%;
-    background rgba(0,0,0,0.8);
-    position fixed;
-    left 0;
-    top 0;
-    z-index 10000;
-    .content
-      width 100%;
-      height 4rem;
-      margin 0 auto;
-      background white;
-      .title
-        height 0.4rem;
-        line-height 0.4rem;
-        font-size 0.2rem;
-        font-weight 600;
-        border-bottom 1px solid #dddddd;
-        text-indent 0.1rem;
-        display flex;
-        justify-content space-between;
-        align-items center;
-        .closed
-          width 0.2rem;
-          margin-right 0.1rem;
-      .list
-        width 100%;
-        height 3rem;
-        display flex;
-        line-height 0.4rem;
-        border-bottom 1px solid #dddddd;  
-        &>div
-          height 3rem;
-          padding-left 0.1rem;
-          overflow scroll;
-          flex 1;
-          div
-            border-bottom 1px solid #ddd;
-        .right
-          background #f9f9f9;
-          padding-right 0.1rem;
-      .btn
-        width 100%;
-        height 0.6rem;
-        display flex;
-        justify-content space-around;
-        &>div
-          width 1.6rem;
-          height 0.4rem;
-          text-align center;
-          line-height 0.4rem;
-          border-radius 0.1rem;
-          margin-top 0.1rem;
-        .clear
-          background: #f8f8f9;
-          color: #9399a5; 
-        .share
-          background: #FFA54F;
-          color: #fff;     
 </style>
