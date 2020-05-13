@@ -1,9 +1,9 @@
 <template>
   <div class="translation">
     <div class="language" v-if="isshowlanguage">
-      <span :class="{selectfontcolor:getlanguage == 0}" @click.stop="ChangeLangugaeAsy(0)">中文</span>  / 
-      <span :class="{selectfontcolor:getlanguage == 1}" @click.stop="ChangeLangugaeAsy(1)">English</span>
-      <img @click.stop="changelanguageflag" src="../assets/commom/close.png" alt="">
+      <span :class="{selectcolor:getlanguage == 0}" @click.stop="ChangeLangugaeAsy(0)">中文</span>  / 
+      <span :class="{selectcolor:getlanguage == 1}" @click.stop="ChangeLangugaeAsy(1)">English</span>
+     <!-- <img @click.stop="changelanguageflag" src="../assets/commom/close.png" alt=""> -->
     </div>
   </div>
 </template>
@@ -36,14 +36,13 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .language
-    width 1.2rem;
-    padding-left 0.1rem;
-    height 0.3rem;
-    line-height 0.3rem;
-    background #3072f6;
+    width 0.8rem;
+    height 0.5rem;
+    line-height 0.5rem;
+    // background #3072f6;
     position absolute;
-    right 0rem;
-    top 0.5rem;
+    right 3%;
+    top 0rem;
     color white;
     font-size 0.12rem;
     display flex;
@@ -53,4 +52,7 @@ export default {
     img 
       width 0.2rem;
       height 0.2rem;   
+    .selectcolor
+      color #3072f6  
+      font-weight: 600
 </style>

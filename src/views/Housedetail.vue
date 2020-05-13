@@ -3,7 +3,10 @@
     <Header :title="housedetail[getlanguage]"></Header>
     <div class="detail">
         <div class="houseimg">
-           
+            <Swiper :options="swiperOption" v-if="housedetaildata">
+                <swiper-slide v-for="(item,index) in JSON.parse(housedetaildata.imgArr)" :key="index"><img :src="item"></swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+            </Swiper>
         </div>
         <div class="detaillist">
             <div class="housetitle">{{housedetaildata.title}}</div>
@@ -50,8 +53,8 @@
                         <span v-else>{{housedetaildata.parking == 1? 'Y' : 'N'}}</span>
                     </li>
                     <li>
-                        <span class="type">{{context.housedesc[getlanguage].use}}：</span> 
-                        <span>{{usedArr[getlanguage][housedetaildata.used]}}</span>
+                        <span class="type">{{context.housedesc[getlanguage].city}}：</span> 
+                        <span>{{housedetaildata.cityname}}</span>
                     </li>
                    
                     <li class="full">
@@ -89,6 +92,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import Header from '../components/header'
 export default {
   computed:{
@@ -106,13 +110,26 @@ export default {
     return{
       housedetail:{0:'房屋详情',1:'House Details'},
       housedetaildata:'',   
+      city:'',
+      swiperOption: {//swiper3
+        pagination: {
+          el: '.swiper-pagination'
+        },
+        autoplay: 3000,
+        speed: 1000,
+      }
     }
   },
   components:{
     Header,
+    Swiper,
+    SwiperSlide
   },
   mounted(){    
       this.housedetaildata = sessionStorage.getItem('sesshousedetail') ? JSON.parse(sessionStorage.getItem('sesshousedetail')) : ''
+      let cityname = sessionStorage.getItem('cityparams') ? JSON.parse(sessionStorage.getItem('cityparams')).cityname : ''
+      let addressname = sessionStorage.getItem('cityparams') ? JSON.parse(sessionStorage.getItem('cityparams')).addressname : ''
+      this.city = cityname +  '  ' + addressname
   }
 }
 </script>

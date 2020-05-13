@@ -31,7 +31,18 @@ export default {
     
   },
   methods:{
-   
+   getcity(){
+      if(sessionStorage.getItem('sessioncitydata')){
+        this.addressArr = JSON.parse(sessionStorage.getItem('sessioncitydata'))
+        return;
+      }
+      this.$get('/others/getcity').then((res)=>{
+          if(res.error == '0000'){
+              this.addressArr = res.data
+              sessionStorage.setItem('sessioncitydata',JSON.stringify(res.data))
+          }
+      })
+    },
   }
 }
 </script>

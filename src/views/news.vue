@@ -2,9 +2,9 @@
   <div class="news">
     <Header :title="context.navtype[getlanguage][4]"></Header>
     <nav class="nav">
-        <div :class="{'selectfontcolor':navindex == 0}" @click="clicknav(0)">常见问题</div>
-        <div :class="{'selectfontcolor':navindex == 1}" @click="clicknav(1)">房产资讯</div>
-        <div :class="{'selectfontcolor':navindex == 2}" @click="clicknav(2)">菲常见闻</div>
+        <div :class="{'selectfontcolor':navindex == 0}" @click="clicknav(0)">{{getlanguage == 0 ? "常见问题" : "Q & A"}}</div>
+        <div :class="{'selectfontcolor':navindex == 1}" @click="clicknav(1)">{{getlanguage == 0 ? "房产资讯" : "Property"}}</div>
+        <div :class="{'selectfontcolor':navindex == 2}" @click="clicknav(2)">{{getlanguage == 0 ? "菲常见闻" : "Entertainment"}}</div>
     </nav>
     <div class="qusetent" v-if="navindex == 0">
         <div class="list" v-for="(list,index) in questentArr[getlanguage]" :key="index">
@@ -39,7 +39,7 @@ export default {
       },
       getlist(){
         this.loadingflag(true)
-        this.$get("/questent/getlist").then((res)=>{
+        this.$post("/questent/getlist").then((res)=>{
           this.loadingflag(false)
           if(res.error == '0000'){
             this.questentArr = res.data;

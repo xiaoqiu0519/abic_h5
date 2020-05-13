@@ -1,26 +1,42 @@
 <template>
   <div class="blackcon">
     <Header :title="context.navtype[getlanguage][5]"></Header>
-    <div class="blackimg"></div>
+    <div class="blackimg">
+      <Swiper :options="swiperOption" v-if="blackdetail">
+        <swiper-slide v-for="(item,index) in JSON.parse(blackdetail.imgs)" :key="index"><img :src="item"></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </Swiper>
+    </div>
     <div class="con">
         {{blackdetail.content}}
     </div>
   </div>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex';
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import Header from '../components/header'
 export default {
+  name:'blackcon',
   computed:{
     ...mapGetters(['getlanguage'])
   },
   data(){
     return{
-      blackdetail:''
+      blackdetail:'',
+      swiperOption: {//swiper3
+        pagination: {
+          el: '.swiper-pagination'
+        },
+        autoplay: 3000,
+        speed: 1000,
+      }
     }
   },
   components:{
-    Header
+    Header,
+    Swiper,
+    SwiperSlide
   },
   mounted(){
     if(sessionStorage.getItem('blackdetail')){
@@ -35,9 +51,21 @@ export default {
 .blackcon
   .blackimg
     width 100%;
-    height 2.6rem;
+    line-height 100%;
+    text-align center;
+    img
+      width 100%;
+      max-height 2.6rem;
   .con
     width 94%;
     margin 0 auto;
     line-height 0.2rem;  
+</style>
+<style lang="stylus">
+  .blackimg
+    .swiper-slide
+      display flex;
+      height 2.6rem;
+      justify-content center;
+      align-items center;
 </style>

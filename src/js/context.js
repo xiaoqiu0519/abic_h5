@@ -2,24 +2,24 @@ let context = {
     //0 中文  1 英文
     slogan: {
         0: '诚信所以简单，专业所以放心',
-        1: 'integrity and professional make you feel easy and relax'
+        1: 'Itegrity and professional make you feel easy and relax'
     },
     //导航类型
     navtype: {
-        0: ['房产买卖', '房产租赁', '特价房源', '在线授权', '咨询分享', '吐槽小站', '商务合作', '关于我们'],
-        1: ['For sale', 'For lease', 'Rush sale', 'Authorize', 'News', 'Blacklist hub', 'Partners', 'About us']
+        0: ['房产买卖', '房产租赁', '特价房源', '在线授权', '咨询分享', '避坑指南', '商务合作', '公司简介'],
+        1: ['For Sale', 'For Lease', 'Rush Sale', 'Authorize', 'News', 'Tips', 'Partners', 'Our Company']
     },
     fcjy: {
-        0: { type: '房产买卖', slogan: '超前一分钟，全家都轻松' },
-        1: { type: 'For sale', slogan: 'Relieve yourself, deal with ABIC' }
+        0: { type: '房产买卖', slogan: '轻松购房，交易无忧' },
+        1: { type: 'For Sale', slogan: 'Easy transaction , Worry free' }
     },
     fczl: {
-        0: { type: '房产租赁', slogan: '给我您的需求，让您放心拥有' },
-        1: { type: 'For sale', slogan: 'Tell me your needs, own it' }
+        0: { type: '房产租赁', slogan: '搜你所求，安心入住' },
+        1: { type: 'For Lease', slogan: 'Rent it , Hassle free' }
     },
     tjyy: {
         0: { type: '特价房源', slogan: '机不可失，物超所值' },
-        1: { type: 'For sale', slogan: 'good to invest,just grab it' }
+        1: { type: 'Rush Sale', slogan: 'Worthy to buy ,No hidden charge' }
     },
     areatitle: {
         0: '请选择地址',
@@ -27,12 +27,13 @@ let context = {
     },
     blacknavtxt: {
         0: [{ 'title': '真实案例' }, { 'title': '欢迎投稿' }],
-        1: [{ 'title': 'true story' }, { 'title': 'welcome sharing' }]
+        1: [{ 'title': 'True Story' }, { 'title': 'My Complaints' }]
     },
     housedesc: {
         0: {
             allprice: '价格',
             title: '',
+            city: '区域',
             tower: '单元号&门牌号',
             layout: '户型',
             size: '面积',
@@ -43,26 +44,27 @@ let context = {
             parkingslot: '车位',
             imgArr: [],
             furniture: '家具',
-            surrounding: '周边',
+            surrounding: '配套设施',
             notes: '备注',
             introduction: '房源介绍'
         },
         1: {
-            allprice: 'allprice',
+            allprice: 'Allprice',
             title: '',
-            tower: 'tower/unit',
-            layout: 'layout',
-            paymentterm: 'payment',
-            faceTo: 'face to',
-            balcony: 'balcony',
-            size: 'size',
-            use: 'used',
+            city: 'City',
+            tower: 'Tower no./unit',
+            layout: 'Unit type',
+            paymentterm: 'Payment',
+            faceTo: 'Face to',
+            balcony: 'Balcony',
+            size: 'Size',
+            use: 'Used',
             parkingslot: 'parking',
             imgArr: [],
-            furniture: 'furniture',
-            surrounding: 'surrounding',
-            notes: 'notes',
-            introduction: 'introduction'
+            furniture: 'Furniture',
+            surrounding: 'Amenity',
+            notes: 'Notes',
+            introduction: 'Introduction'
 
         }
     }

@@ -12,9 +12,41 @@
             <p>是一家值得信赖的房产中介公司</p>
         </div>
         <div class="list lxwm">
-            <div class="title">联系我们</div>
-            <p>联系电话：00639155800518 / 0063915710777</p> 
-            <p>公司地址： unit 601A Fedman suites bldg 199 salcedo st Makati city Metro Manila </p> 
+            <div class="title">联系我们：</div>
+            <div class="nav">
+              <div class="tit">手 <span style="margin-left:0.2rem"></span> 机：</div> 
+              <div class="con">
+                <p>中 (0063) 9155800518</p>
+                <p>English (0063) 915710777</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">座 <span style="margin-left:0.2rem"></span> 机：</div>
+              <div class="con">
+                <p>中 （0063）72405150</p>
+                <p>English （0063）72405150</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">小 飞 <span style="margin-left:0.05rem"></span> 机：</div>
+              <div class="con">
+                <p>09155800518</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">邮 <span style="margin-left:0.2rem"></span> 箱：</div>
+              <div class="con">
+                <p>abicrealty@gmail.com</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">微 <span style="margin-left:0.2rem"></span> 信：</div>
+              <div><img src="../assets/commom/wechat.jpg" alt="" srcset=""></div>
+            </div>
+            <div class="nav">
+              <div class="tit">公司地址：</div>
+              <div class="con">unit 601A Fedman suites bldg 199 salcedo st Makati city Metro Manila</div>
+            </div> 
         </div>
     </div>
     <div class="content" v-else>
@@ -28,9 +60,40 @@
             <p>clients security and money for there investments and own safety</p> 
         </div>
         <div class="list lxwm">
-            <div class="title">CONTACT US</div>
-            <p>company contact：00639155800518 / 0063915710777</p> 
-            <p>company address：unit 601A Fedman suites bldg 199 salcedo st Makati city Metro Manila</p> 
+          <div class="title">CONTACT US</div>
+            <div class="nav">
+              <div class="tit">Mobile：</div> 
+              <div class="con">
+                <p>(0063) 9155800518  （中文）</p>
+                <p>(0063) 915710777 （English）</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">Landline：</div>
+              <div class="con">
+                <p>（0063）72405150</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">Telegram：</div>
+              <div class="con">
+                <p>09155800518</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">Email：</div>
+              <div class="con">
+                <p>abicrealty@gmail.com</p>
+              </div>
+            </div> 
+            <div class="nav">
+              <div class="tit">WeChat: </div>
+              <div><img src="../assets/commom/wechat.jpg" alt="" srcset=""></div>
+            </div>
+            <div class="nav">
+              <div class="tit">company address：</div>
+              <div class="con">unit 601A Fedman suites bldg 199 salcedo st Makati city Metro Manila</div>
+            </div> 
         </div>
     </div>
   </div>
@@ -60,7 +123,20 @@ export default {
             margin-top 0.3rem;
             line-height 0.24rem;
             .title
-                font-size 0.2rem;
-                font-weight 600;
-                padding-bottom 0.15rem;
+              font-size 0.2rem;
+              font-weight 600;
+              padding-bottom 0.15rem;
+            .nav
+              width 100%;
+              display flex; 
+              margin-bottom 0.1rem;
+              .tit
+                width 0.7rem;
+              .con
+                flex 1;  
+              img
+                border 1px solid #999999;  
+    .wechart
+      width 100%;
+      text-align center;
 </style>

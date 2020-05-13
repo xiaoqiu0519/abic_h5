@@ -13,14 +13,14 @@ export default new Vuex.Store({
                 2: '1室1厅',
                 3: '2室1厅',
                 4: '3室1厅',
-                5: '其它',
+                5: '别墅',
             },
             1: {
-                1: 'studio',
+                1: 'Studio',
                 2: '1BR',
                 3: '2BR',
                 4: '3BR',
-                5: 'others'
+                5: 'House'
             }
         },
         furnitureArr: {
@@ -127,6 +127,7 @@ export default new Vuex.Store({
                 }
             }
         },
+        cityparams: '',
     },
     getters: {
         getlanguage(state) {
@@ -152,6 +153,9 @@ export default new Vuex.Store({
         },
         paymentArr(state) {
             return state.paymentArr
+        },
+        cityparamsstore(state) {
+            return state.cityparams
         }
     },
     mutations: {
@@ -161,6 +165,9 @@ export default new Vuex.Store({
         },
         ChangeLoaing(state, flag) {
             return state.loading = flag;
+        },
+        setcityparamsstore(state, str) {
+            return state.cityparams = str;
         }
     },
     actions: {
@@ -170,6 +177,9 @@ export default new Vuex.Store({
         },
         ChangeLoadingAsy(context, flag) {
             context.commit('ChangeLoaing', flag)
+        },
+        cityparamsstoreAsy(context, str) {
+            context.commit('setcityparamsstore', str)
         }
     },
     modules: {}

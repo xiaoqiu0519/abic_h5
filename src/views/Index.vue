@@ -1,16 +1,18 @@
 <template>
   <div class="home">
     <header>
-      <img class="logo" src="../assets/index/logo.png" alt="" srcset="">
-      <span class="slogan">{{context.slogan[getlanguage]}}</span>
+     <img class="logo" src="../assets/index/abiclogo.png" alt="" srcset="">
+     <translation></translation>
     </header>
-    <translation></translation>
-    <div class="selectaddress">
-      <div class="con" @click="selectflagfun()">
-        <img class="icon" src="../assets/commom/dingwei.png" alt="">
-        <span class="selectfontcolor">{{cityname}}  {{addressvalue ? addressname : ''}}</span>
-        <img class="selectimg" src="../assets/commom/xiala.png" alt="">
-      </div>
+    <div class="houseimg">
+        <Swiper :options="swiperOption">
+            <swiper-slide v-for="(item,index) in sloganArr" :key="index">
+              <div class="swiperimg">
+                <img :src="item.img">
+              </div>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+        </Swiper>
     </div>
     <div class="navcon">
      <div class="list" @click="clicknav(index)"
@@ -19,56 +21,29 @@
         <p>{{item}}</p>
       </div>
     </div>
-    <div class="typelist">
+    <div class="typelist" v-if="fcjyArr&& fcjyArr[getlanguage] && fcjyArr[getlanguage].length != 0">
       <p class="title" @click="clicknav(0)">
         <span class="type">{{context.fcjy[getlanguage].type}}</span>
-        <span class="slogan">{{context.fcjy[getlanguage].slogan}}</span>
-        <img class="more" src="../assets/commom/right.png" alt="" srcset="">
+        <!-- <span class="slogan">{{context.fcjy[getlanguage].slogan}}</span> -->
+        <img class="more" src="../assets/commom/right(2).png" alt="" srcset="">
       </p>
-      <div class="navlist" v-if="fcjyArr && fcjyArr[getlanguage].length !=0">
-        <div class="list" v-for="(list,index) in fcjyArr[getlanguage].slice(0,3)" :key="index"  @click="gohouserdetail(list)">
-            <img class="houseimg" src="../assets/commom/house.png" alt="">
-            <div class="card-title">{{layoutArr[getlanguage][list.layout]}} / {{list.size}} ㎡</div>
-            <div class="price">{{list.sellingprice | formatnum}} peso</div>
-        </div>
-      </div>
-      <div class="navlist" v-else>
-        <Nodata></Nodata>
-      </div>
+      <houselist :housedata = 'fcjyArr'></houselist>
     </div>
-    <div class="typelist">
+    <div class="typelist" v-if="fczlArr && fczlArr[getlanguage] && fczlArr[getlanguage].length !=0">
       <p class="title"  @click="clicknav(1)">
         <span class="type">{{context.fczl[getlanguage].type}}</span>
-        <span class="slogan">{{context.fczl[getlanguage].slogan}}</span>
-        <img class="more" src="../assets/commom/right.png" alt="" srcset="">
+        <!-- <span class="slogan">{{context.fczl[getlanguage].slogan}}</span> -->
+        <img class="more" src="../assets/commom/right(2).png" alt="" srcset="">
       </p>
-      <div class="navlist" v-if="fczlArr && fczlArr[getlanguage].length !=0">
-        <div class="list" v-for="(list,index) in fczlArr[getlanguage].slice(0,3)" :key="index" @click="gohouserdetail(list)">
-            <img class="houseimg" src="../assets/commom/house.png" alt="">
-            <div class="card-title">{{layoutArr[getlanguage][list.layout]}} / {{list.size}} ㎡</div>
-            <div class="price">{{list.sellingprice | formatnum}} p/月</div>
-        </div>
-      </div>
-      <div class="navlist" v-else>
-        <Nodata></Nodata>
-      </div>
+      <houselist :housedata = 'fczlArr'></houselist>
     </div>
-    <div class="typelist" >
+    <div class="typelist" v-if="tjfyArr && tjfyArr[getlanguage] && tjfyArr[getlanguage].length !=0">
       <p class="title"  @click="clicknav(2)">
         <span class="type">{{context.tjyy[getlanguage].type}}</span>
-        <span class="slogan">{{context.tjyy[getlanguage].slogan}}</span>
-        <img class="more" src="../assets/commom/right.png" alt="" srcset="">
+         <!-- <span class="slogan">{{context.tjyy[getlanguage].slogan}}</span> -->
+        <img class="more" src="../assets/commom/right(2).png" alt="" srcset="">
       </p>
-      <div class="navlist" v-if="tjfyArr && tjfyArr[getlanguage].length !=0" style="border-bottom:none">
-        <div class="list" v-for="(list,index) in tjfyArr[getlanguage].slice(0,3)" :key="index"  @click="gohouserdetail(list)">
-            <img class="houseimg" src="../assets/commom/house.png" alt="">
-            <div class="card-title">{{layoutArr[getlanguage][list.layout]}} / {{list.size}} ㎡</div>
-            <div class="price">{{list.sellingprice | formatnum}} peso</div>
-        </div>
-      </div>
-      <div class="navlist" v-else>
-        <Nodata></Nodata>
-      </div>
+      <houselist :housedata = 'tjfyArr'></houselist>
     </div>
     <div class="cityshadebox" v-if="selectflag">
       <div class="content">
@@ -103,9 +78,11 @@
 
 <script>
 // @ is an alias to /src
-import {mapGetters } from 'vuex'
+import {mapGetters, mapActions } from 'vuex'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import translation from '../components/translation' 
-import Nodata from '../components/nodata'
+import houselist from '../components/housemes';
+// import Nodata from '../components/nodata'
 export default {
   name: 'Home',
   data(){
@@ -115,24 +92,9 @@ export default {
       cityvalue:'',
       addressvalue:'',
       citylist:[],
-      addressArr:{
-        // 0:[
-        //   {city:'全部',addressname:[]},
-        //   {city:'马尼拉',address:['不限','makati','pasay','taguig','makati','pasay','taguig','makati','pasay','taguig']},
-        //   {city:'甲美地',address:['不限','makati','pddddd','makati','pasay','taguig']},
-        //   {city:'邦板牙',address:['不限','makati','pddddd','dsafdfadf','fgrefsdf']},
-        //   {city:'马尼拉',address:['不限','makati','pddddd','iuidjisf','okm']}
-        // ],
-        // 1:[
-        //   {city:'All',addressname:[]},
-        //   {city:'manila',address:['All','makati','pasay','taguig','makati','pasay','taguig','makati','pasay','taguig']},
-        //   {city:'cavite',address:['All','makati','pddddd','makati','pasay','taguig']},
-        //   {city:'pampanga',address:['All','makati','pddddd','dsafdfadf','fgrefsdf']},
-        //   {city:'manila',address:['All','makati','pddddd','iuidjisf','okm']}
-        // ]
-      },
-      fcjyArr:'',
-      fczlArr:'',
+      addressArr:{},
+      fcjyArr:[],
+      fczlArr:[],
       tjfyArr:'',
       selectcityindex:'0',
       selectaddressindex:'0',
@@ -147,7 +109,45 @@ export default {
         require('../assets/index/gywm.png'),
       ],
       selectflag:false,
-      cityparams:''
+      cityparams:'',
+      housedata:'',
+      sloganArr:[
+        {
+          img:require('../assets/index/1.jpg'),
+          txt:{
+            0: '诚信所以简单，专业所以放心',
+            1: 'Itegrity and professional make you feel easy and relax'
+          }
+        },
+        {
+          img:require('../assets/index/2.jpg'),
+          txt:{
+            0: '轻松购房，交易无忧',
+            1: 'Easy transaction , Worry free'
+          }
+        },
+        {
+          img:require('../assets/index/3.jpg'),
+          txt:{
+            0: '搜你所求，安心入住',
+            1: 'Rent it , Hassle free'
+          }
+        },
+        {
+          img:require('../assets/index/4.jpg'),
+          txt:{
+            0: '机不可失，物超所值',
+            1: 'Worthy to buy ,No hidden charge'
+          }
+        }
+      ],
+      swiperOption: {//swiper3
+        pagination: {
+          el: '.swiper-pagination'
+        },
+        autoplay: 3000,
+        speed: 1000,
+      }
     }
   },
   computed:{
@@ -155,47 +155,58 @@ export default {
   },
   components:{
     translation,
-    Nodata
+    houselist,
+    Swiper,
+    SwiperSlide
+    //Nodata
   },
   mounted(){
     this.cityparams = this.cityvalue + '-' +this.addressvalue
+    // this.getcity();
     this.init();
-    this.getcity();
   },
   methods: {
+    ...mapActions(['cityparamsstoreAsy']),
     selectaddressfun(list){
       this.addressname[this.getlanguage] = list;
       this.selectflag = false;
     },
     init(){
       this.gethouselist({
+        pageNum: 1,
+        pageSize: 1,
         params:JSON.stringify({type:1,status:1,city:this.cityparams})
       });
       this.gethouselist({
+        pageNum: 1,
+        pageSize: 1,
         params:JSON.stringify({type:2,status:1,city:this.cityparams})
       });
       this.gethouselist({
+        pageNum: 1,
+        pageSize: 1,
         params:JSON.stringify({type:3,status:1,city:this.cityparams})
       });
     },
     getcity(){
-        this.$get('/others/getcity').then((res)=>{
-            if(res.error == '0000'){
-                this.addressArr = res.data
-                // for(var i=0 ; i <res.data[0].length ;i++){
-                //     for(var j=0 ;j <res.data[0][i].children.length;j++){
-                //         this.citytran[0][res.data[0][i].value + '-' + res.data[0][i].children[j].value] = res.data[0][i].label + res.data[0][i].children[j].label
-                //     }
-                // }
-                // for(var m=0 ; m <res.data[1].length ;m++){
-                //     for(var n=0 ;n <res.data[1][m].children.length;n++){
-                //         this.citytran[1][res.data[1][m].value + '-' + res.data[1][m].children[n].value] = res.data[1][m].label + res.data[1][m].children[n].label
-                //     }
-                // }
-                // this.selectcitylist = res.data[0].slice(1)
-                this.cityname = this.addressArr[this.getlanguage][0].label;
-            }
-        })
+      if(sessionStorage.getItem('sessioncitydata') && sessionStorage.getItem('cityparams')){
+        this.addressArr = JSON.parse(sessionStorage.getItem('sessioncitydata'));
+        this.cityname = JSON.parse(sessionStorage.getItem('cityparams')).cityname;
+        this.addressname = JSON.parse(sessionStorage.getItem('cityparams')).addressname;
+        this.cityparams = JSON.parse(sessionStorage.getItem('cityparams')).cityparams
+        this.cityvalue = this.cityparams.split('-')[0] || '';
+        this.addressvalue = this.cityparams.split('-')[1] || '';
+        this.selectcityindex = this.cityvalue || 0;
+        this.selectaddressindex = this.addressvalue;
+        return;
+      }
+      this.$get('/others/getcity').then((res)=>{
+          if(res.error == '0000'){
+              this.addressArr = res.data
+              sessionStorage.setItem('sessioncitydata',JSON.stringify(res.data))
+              this.cityname = this.addressArr[this.getlanguage][0].label;
+          }
+      })
     },
     gethouselist(params){
       this.loadingflag(true)
@@ -237,6 +248,12 @@ export default {
     sharebtn(){
       this.selectflag = false;
       this.cityparams = this.cityvalue + '-' +this.addressvalue
+      this.cityparamsstoreAsy(this.cityparams)
+      sessionStorage.setItem('cityparams',JSON.stringify({
+        cityparams:this.cityparams,
+        cityname:this.cityname,
+        addressname:this.addressname
+      }))
       this.init();
     },
     clearbtn(){
@@ -285,8 +302,10 @@ export default {
     padding 0 3%;
     height 0.5rem;
     background #FFA54F;
+    //background white;
     display flex;
     align-items center;
+    justify-content center;
     .slogan
       flex 1;
       margin-left 0.5rem;
@@ -309,6 +328,7 @@ export default {
     width 100%;
     .title
       width 94%;
+      padding 0 3%;
       height 0.4rem;
       margin 0.1rem auto;
       display flex;
@@ -316,11 +336,27 @@ export default {
       align-items center;
       .type
         font-size 0.2rem;
-        font-weight 600;
+        color #ffa54f;
       .slogan
         font-size 0.16rem;  
       .more
         width 0.2rem;  
+  .houseimg
+    .swiperimg
+      position relative;
+      img
+        width: 100%; 
+        height 2.2rem;  
+      .slogan
+        width 100%;
+        height 0.2rem;
+        display inline-block;
+        text-align center;
+        position absolute;
+        top 0.5rem;  
+        left 0;
+        color white;
+        font-size 0.18rem;      
   .navlist  
     width: 94%;
     padding: 0 3%;
@@ -334,6 +370,7 @@ export default {
       font-size: 0.12rem;
       .houseimg
         width 100%;
+        height 0.8rem;
       .card-title
         font-size 0.12rem 
       .price

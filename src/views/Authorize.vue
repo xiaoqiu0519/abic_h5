@@ -2,8 +2,8 @@
   <div class="houselist">
     <Header :title="context.navtype[getlanguage][3]"></Header>
     <div class="nav">
-        <span :class="{'navcolor':navindex == 0}" @click="clicknav(0)">{{getlanguage == 0 ? "出售" : "rent"}}</span>
-        <span :class="{'navcolor':navindex == 1}" @click="clicknav(1)">{{getlanguage == 0 ? "租赁" : "sell"}}</span>
+        <span :class="{'navcolor':navindex == 0}" @click="clicknav(0)">{{getlanguage == 0 ? "出售" : "Sell"}}</span>
+        <span :class="{'navcolor':navindex == 1}" @click="clicknav(1)">{{getlanguage == 0 ? "租赁" : "Rent"}}</span>
     </div>
     <div class="houseform">
         <div class="inputdiv">
@@ -24,11 +24,15 @@
             <input type="text" v-else v-model="housename.name_e" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].title">
         </div>
         <div class="inputdiv">
+            <span><i> * </i> 图片</span>
+            <UpFile @senddata='getMsgForm' ref="ConFile"></UpFile>
+        </div>
+        <div class="inputdiv">
             <span><i> * </i> {{tabtext[getlanguage].city}}</span>
             <div class="selectaddress">
               <div class="con" @click="selectflagfun()">
                 <span class="selectfontcolor">{{cityname}}  {{addressname}}</span>
-                <img class="selectimg" src="../assets/commom/xiala.png" alt="">
+                <img class="selectimg" src="../assets/commom/xiala2.png" alt="">
               </div>
             </div>
         </div>
@@ -58,7 +62,7 @@
             <i>m²</i>
         </div>
         <div class="inputradio">
-            <span><i> * </i> {{tabtext[getlanguage].faceto}}</span>
+            <span><i>  </i> {{tabtext[getlanguage].faceto}}</span>
             <div class="radiolist">
                 <span v-for="(list,index) in faceToArr[getlanguage]" :key="index">
                     <input v-model="faceto" :value='index' type="radio" name="faceto" id="">{{list}}
@@ -80,8 +84,8 @@
             </div>
         </div>
         <div class="inputdiv">
-            <span><i> * </i> {{tabtext[getlanguage].sellingprice}}</span>
-            <input type="text" v-model="sellingprice" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].sellingprice">
+            <span><i> * </i> {{tabtext[getlanguage].sellingprice[this.navindex]}}</span>
+            <input type="text" v-model="sellingprice" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].sellingprice[this.navindex]">
         </div>
         <div class="inputradio">
             <span><i> * </i> {{tabtext[getlanguage].payment}}</span>
@@ -143,6 +147,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import Header from '../components/header'
+import UpFile from '../components/upfile'
 export default {
   computed:{
     ...mapGetters([
@@ -187,28 +192,34 @@ export default {
                   faceto:'朝向',
                   balcony:'阳台',
                   parking:'车位',
-                  sellingprice:'预售价格',
+                  sellingprice:{
+                    0:'预售价格',
+                    1:'预期租金'
+                  },
                   payment:"支付方式",
                   notes:'备注',
                   furniture:'家具',
             },
             1:{
-                  username:'name',
-                  telphone:'contact no',
-                  email:'email',
-                  title:'project name',
-                  city:'city',
-                  type:'type',
-                  tower:'tower/unit no',
-                  layout:'layout',
-                  size:'size',
-                  faceto:'face to',
-                  balcony:'balcony',
-                  parking:'parking slot',
-                  sellingprice:'selling price',
-                  payment:"payment",
-                  notes:'notes',
-                  furniture:'furniture',
+                  username:'Name',
+                  telphone:'Contact No',
+                  email:'Email',
+                  title:'Project Name',
+                  city:'City',
+                  type:'Type',
+                  tower:'Tower/unit no',
+                  layout:'Unit Type',
+                  size:'Size',
+                  faceto:'Face to',
+                  balcony:'Balcony',
+                  parking:'Parking Slot',
+                  sellingprice:{
+                    0:'Selling Price',
+                    1:'Rental'
+                  },
+                  payment:"Payment",
+                  notes:'Notes',
+                  furniture:'Furniture',
             }
         },
         username:'',
@@ -246,7 +257,8 @@ export default {
             0:{},
             1:{}
         },
-        alertflag:false
+        alertflag:false,
+        formData:''
     }
   },
   watch:{
@@ -259,7 +271,8 @@ export default {
     }
   },
   components:{
-    Header
+    Header,
+    UpFile
   },
   mounted(){
     this.getcity();
@@ -267,6 +280,9 @@ export default {
   methods:{
       clicknav(index){
           this.navindex = index;
+      },
+      getMsgForm(data){
+        this.formData = data
       },
       getcity(){
         this.$get('/others/getcity').then((res)=>{
@@ -351,11 +367,11 @@ export default {
             this.tiptext = this.getlanguage == 0 ? "请选择房屋面积" : "Please enter the floor size"
             return;
           }
-          if(!this.faceto){
-            this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请选择房屋朝向" : "Please select the house orientation"
-            return;
-          }
+          // if(!this.faceto){
+          //   this.alertflag = true;
+          //   this.tiptext = this.getlanguage == 0 ? "请选择房屋朝向" : "Please select the house orientation"
+          //   return;
+          // }
           if(!this.balcony){
             this.alertflag = true;
             this.tiptext = this.getlanguage == 0 ? "请选择是否有阳台" : "Please select whether there is a balcony"
@@ -381,33 +397,36 @@ export default {
             this.tiptext = this.getlanguage == 0 ? "请选择家具" : "Please select furniture"
             return;
           }
-          this.$post('/house/addhouse',{
-            id:'',  
-            username:this.username.trim(),
-            telphone:this.telphone.trim(),
-            email:this.email.trim(),
-            title:JSON.stringify(this.housename),
-            city:this.cityparams,
-            size:this.size,
-            type:this.navindex == 0 ? '1' : '2',
-            tower:this.housetower,
-            layout:this.layout,
-            faceto:this.faceto,
-            balcony:this.balcony,
-            parking:this.parking,
-            sellingprice:this.sellingprice,
-            payment:this.payment,
-            notes:JSON.stringify(this.housenotes),
-            furniture:JSON.stringify(this.furniture),
-            used:this.used,
-            surrounding:JSON.stringify(this.surrounding),
-            imgArr:'图片',
-            introduction:JSON.stringify(this.houseintroduction)
-            }).then((res)=>{
+          this.loadingflag(true)
+          this.formData.append('id','');
+          this.formData.append('username',this.username.trim());
+          this.formData.append('telphone',this.telphone.trim());
+          this.formData.append('email',this.email.trim());
+          this.formData.append('title',JSON.stringify(this.housename));
+          this.formData.append('city',this.cityparams);
+          this.formData.append('cityname',JSON.stringify({
+            cityname_c:this.cityname,
+            cityname_e:this.cityname,
+          }))
+          this.formData.append('size',this.size);
+          this.formData.append('type',this.navindex == 0 ? '1' : '2');
+          this.formData.append('tower',this.housetower);
+          this.formData.append('layout',this.layout);
+          this.formData.append('faceto',this.faceto);
+          this.formData.append('balcony',this.balcony);
+          this.formData.append('parking',this.parking);
+          this.formData.append('sellingprice',this.sellingprice);
+          this.formData.append('payment',this.payment);
+          this.formData.append('notes',JSON.stringify(this.housenotes));
+          this.formData.append('furniture',JSON.stringify(this.furniture));
+          this.formData.append('used',this.used);
+          this.formData.append('introduction',JSON.stringify(this.houseintroduction));
+          this.formData.append('surrounding',JSON.stringify(this.surrounding));
+          this.$post('/house/addhouse',this.formData).then((res)=>{
+              this.loadingflag(false)
               if(res.error == '0000'){
-                console.log('提交成功，待后台审核')
-              }else{
-                console.log('操作失败')
+                this.alertflag = true;
+                this.tiptext = '提交成功，待后台审核'
               }
             })
       }
@@ -442,7 +461,7 @@ export default {
             top 0.01rem;
         .inputdiv
             width 100%;
-            height 0.4rem;
+            min-height 0.4rem;
             line-height 0.4rem;
             display flex;
             border-bottom 1px solid #ddd;
@@ -501,27 +520,4 @@ export default {
             border-radius 0.1rem;
             margin-top 0.2rem;
             color white;  
-    .alertbox
-        width 100%;
-        height 100%;
-        position fixed;
-        left 0;
-        top 0;
-        background rgba(0,0,0,0);  
-        display flex;
-        justify-content center;
-        align-items center;    
-        .tip
-            text-align center;
-            background #eeeeee;
-            display flex;
-            justify-content center;
-            align-items center;
-            color #ffa54f
-            padding 0.1rem 0.2rem;
-            border-radius 0.05rem;
-            img
-                width 0.16rem;
-                margin-right 0.1rem;
-
 </style>

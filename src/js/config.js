@@ -41,7 +41,7 @@ export function post(url, params = {}, isForm = false) {
         }).then(response => {
             resolve(response)
         }).catch(error => {
-            store.dispatch('changeloadingAsy', false);
+            store.dispatch('ChangeLoadingAsy', false);
             //store.dispatch('changeshowerrorAsy');
             reject(error)
         })
@@ -64,7 +64,7 @@ export function get(url, params = {}, isForm = false) {
         }).then(response => {
             resolve(response)
         }).catch(error => {
-            store.dispatch('changeloadingAsy', false);
+            store.dispatch('ChangeLoadingAsy', false);
             //store.dispatch('changeshowerrorAsy');
             reject(error)
         })

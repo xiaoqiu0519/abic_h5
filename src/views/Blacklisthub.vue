@@ -16,7 +16,7 @@
                     {{list.content.length > 50  ? list.content.substring(0,50) + '...' : list.content}}
                 </div>
                 <div class="imgarr">
-                    <img src="../assets/commom/house.png" v-for="(list,index) in 4" :key="index" alt="">
+                    <img v-for="(item,index) in JSON.parse(list.imgs)" :src="item" :key="index" alt="">
                 </div>
             </div>
         </div>
@@ -32,9 +32,7 @@
             </div>
             <div class="updata">
                 <span>{{conformtxt[getlanguage].updateimg}}：</span>
-                <div class="imglist">
-
-                </div>
+                <UpFile @senddata='getMsgForm' ref="ConFile"></UpFile>
             </div>
             <div class="inputdiv">
                 <span>{{conformtxt[getlanguage].telphpne}}：</span>
@@ -42,23 +40,43 @@
             </div>
             <div class="btn" @click="surebtn()">{{conformtxt[getlanguage].commitbtn}}</div>
         </div>
+        <div class="alertbox" @touchmove.prevent v-if="alertflag">
+            <div class="tip">
+                <img src="../assets/commom/tip.png" alt="" srcset="">
+                {{tiptext}}
+            </div>
+        </div>
     </div>
   </div>
 </template>
 <script>
 import {mapGetters} from 'vuex'
 import Header from '../components/header'
+import UpFile from '../components/upfile'
 export default {
   computed:{
     ...mapGetters(['getlanguage'])
   },
+watch:{
+    alertflag(){
+      if(this.alertflag){
+        setTimeout(()=>{
+          this.alertflag = false;
+        },1500)
+      }
+    }
+  },
   data(){
       return{
+          //formData:'',
+          alertflag:false,
+          tiptext:'',
           navindex:0,
           tabledata:[],
           title:'',
           content:'',
           telphone:'',
+          //upImgArr:[],
           conformtxt:{
               0:{
                   title:'标题',
@@ -78,13 +96,14 @@ export default {
                   updateimg:'Update Img',
                   telphpne:'telphone',
                   placeholdertel:'Please enter your phone',
-                  commitbtn:'submission'
+                  commitbtn:'Submission'
               }
           }
       }
   },
   components:{
-    Header
+    Header,
+    UpFile
   },
   mounted(){
     this.getblacklist()
@@ -101,22 +120,51 @@ export default {
             }
         });
       },
+      getMsgForm(data){
+        this.formData = data
+      },
       clicknav(index){
           this.navindex = index;
+      },
+      initdata(){
+          this.title = '';
+          this.content = '';
+          this.telphone = '';
+          this.$refs.ConFile.clearImg()
       },
       goblackcon(list){
           sessionStorage.setItem('blackdetail',JSON.stringify(list))
           this.$router.push('/blackcon')
       },
       surebtn(){
-          this.$post('/black/updatecon',{
-            title_c:this.getlanguage == '0' ? this.title : '',
-            content_c:this.getlanguage == '0' ? this.content : '',
-            title_e:this.getlanguage == '1' ? this.title : '',
-            content_e:this.getlanguage == '1' ? this.content : '',
-            telphone:this.telphone
-          }).then((res)=>{
-              console.log(res)
+          if(!this.title){
+            this.alertflag = true;
+            this.tiptext = this.conformtxt[this.getlanguage].placeholdertitle;
+            return;
+          }
+          if(!this.content){
+            this.alertflag = true;
+            this.tiptext = this.conformtxt[this.getlanguage].placeholdercontent;
+            return;
+          }
+          if(!this.telphone){
+            this.alertflag = true;
+            this.tiptext = this.conformtxt[this.getlanguage].placeholdertel;
+            return;
+          }
+          this.loadingflag(true)
+          this.formData.append('title_c',this.getlanguage == '0' ? this.title : '');
+          this.formData.append('content_c',this.getlanguage == '0' ? this.title : '');
+          this.formData.append('title_e',this.getlanguage == '0' ? this.title : '');
+          this.formData.append('content_e',this.getlanguage == '0' ? this.title : '');
+          this.formData.append('telphone',this.telphone);
+          this.$post('/black/updatecon',this.formData).then((res)=>{
+               this.loadingflag(false)
+              if(res.error == '0000'){
+                  this.alertflag = true;
+                  this.tiptext = '提交成功，待后台审核'
+                  this.initdata();
+              }
           })
       }
   }
@@ -201,10 +249,6 @@ export default {
                 display flex;
                 span
                     width 0.8rem;
-                .imglist
-                    flex 1;
-                    height 1rem;
-                    background red;
             .btn
                 width 2.6rem;
                 height 0.36rem;

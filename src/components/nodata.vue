@@ -1,6 +1,7 @@
 <template>
     <div class="nodata">
-        {{nodatames[getlanguage]}}
+        <img src="../assets/commom/nodata-file.png" alt="" srcset="">
+        <span>{{nodatames[getlanguage]}}</span> 
     </div>
 </template>
 <script>
@@ -24,4 +25,8 @@ export default {
         width 100%;
         margin 0.2rem 0;
         text-align center;
+        img 
+            display block;
+            width 1.2rem;
+            margin 0.2rem auto;
 </style>
