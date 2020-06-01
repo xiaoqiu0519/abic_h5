@@ -16,21 +16,20 @@
             <div class="nav">
               <div class="tit">手 <span style="margin-left:0.2rem"></span> 机：</div> 
               <div class="con">
-                <p>中 (0063) 9155800518</p>
-                <p>English (0063) 915710777</p>
+                <p>中 <a href="tel:0063-9155800518">(0063) 9155800518</a></p>
+                <p>English <a href="tel:0063-915710777">(0063) 915710777</a></p>
               </div>
             </div> 
             <div class="nav">
               <div class="tit">座 <span style="margin-left:0.2rem"></span> 机：</div>
               <div class="con">
-                <p>中 （0063）72405150</p>
-                <p>English （0063）72405150</p>
+                <p><a href="tel:0063-72405150">(0063) 72405150</a></p>
               </div>
             </div> 
             <div class="nav">
               <div class="tit">小 飞 <span style="margin-left:0.05rem"></span> 机：</div>
               <div class="con">
-                <p>09155800518</p>
+                <p><a href="tel:09155800518">09155800518</a></p>
               </div>
             </div> 
             <div class="nav">
@@ -64,20 +63,20 @@
             <div class="nav">
               <div class="tit">Mobile：</div> 
               <div class="con">
-                <p>(0063) 9155800518  （中文）</p>
-                <p>(0063) 915710777 （English）</p>
+                <p>中 <a href="tel:0063-9155800518">(0063) 9155800518</a></p>
+                <p>English <a href="tel:0063-9155800518">(0063) 915710777</a></p>
               </div>
             </div> 
             <div class="nav">
               <div class="tit">Landline：</div>
               <div class="con">
-                <p>（0063）72405150</p>
+                <p><a href="tel:0063-72405150">(0063) 72405150</a></p>
               </div>
             </div> 
             <div class="nav">
               <div class="tit">Telegram：</div>
               <div class="con">
-                <p>09155800518</p>
+                <p><a href="tel:09155800518">09155800518</a></p>
               </div>
             </div> 
             <div class="nav">

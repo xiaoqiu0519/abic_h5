@@ -1,7 +1,8 @@
 <template>
     <div class="nodata">
         <img src="../assets/commom/nodata-file.png" alt="" srcset="">
-        <span>{{nodatames[getlanguage]}}</span> 
+        <span v-if="tip">{{tip[getlanguage]}}</span>
+        <span v-else>{{nodatames[getlanguage]}}</span> 
     </div>
 </template>
 <script>
@@ -12,12 +13,16 @@ export default {
             nodatames:{
                 0:'一大波房源信息即将到来，敬请期待',
                 1:'A wave of listing information is coming, so stay tuned'
-            }
+            },
         }
     },
+    props:['tip'],
     computed:{
         ...mapGetters(['getlanguage'])
     },
+    mounted(){
+        //console.log(this.tip)
+    }
 }
 </script>
 <style lang="stylus" scoped>

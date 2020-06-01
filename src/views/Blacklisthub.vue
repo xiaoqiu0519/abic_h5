@@ -7,17 +7,22 @@
                 :key="index" @click="clicknav(index)">{{list.title}}</span>
         </div>
         <div class="conlist" v-if="navindex == 0">
-            <div class="list" v-for="(list,index) in tabledata[getlanguage]" :key="index" @click="goblackcon(list)">
-                <div class="title">
-                    <span class="name">{{list.title}}</span>
-                    <span class="time">{{list.createtime}}</span>
+            <div v-if="tabledata[getlanguage] && tabledata[getlanguage].length !=0">
+                <div class="list" v-for="(list,index) in tabledata[getlanguage]" :key="index" @click="goblackcon(list)">
+                    <div class="title">
+                        <span class="name">{{list.title}}</span>
+                        <span class="time">{{list.createtime}}</span>
+                    </div>
+                    <div class="con">
+                        {{list.content.length > 50  ? list.content.substring(0,50) + '...' : list.content}}
+                    </div>
+                    <div class="imgarr">
+                        <img v-for="(item,index) in JSON.parse(list.imgs)" :src="item" :key="index" alt="">
+                    </div>
                 </div>
-                <div class="con">
-                    {{list.content.length > 50  ? list.content.substring(0,50) + '...' : list.content}}
-                </div>
-                <div class="imgarr">
-                    <img v-for="(item,index) in JSON.parse(list.imgs)" :src="item" :key="index" alt="">
-                </div>
+            </div>
+            <div v-else>
+                <Nodata :tip='tip'></Nodata>
             </div>
         </div>
         <div class="conform" v-else>
@@ -53,11 +58,12 @@
 import {mapGetters} from 'vuex'
 import Header from '../components/header'
 import UpFile from '../components/upfile'
+import Nodata from '../components/nodata'
 export default {
   computed:{
     ...mapGetters(['getlanguage'])
   },
-watch:{
+  watch:{
     alertflag(){
       if(this.alertflag){
         setTimeout(()=>{
@@ -69,6 +75,10 @@ watch:{
   data(){
       return{
           //formData:'',
+          tip:{
+              0:'暂无数据',
+              1:'no data'
+          },
           alertflag:false,
           tiptext:'',
           navindex:0,
@@ -102,6 +112,7 @@ watch:{
       }
   },
   components:{
+    Nodata,  
     Header,
     UpFile
   },
