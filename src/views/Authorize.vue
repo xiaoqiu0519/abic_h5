@@ -126,7 +126,7 @@
           <div class="left">
             <div :class="{'selectfontcolor':selectcityindex == index}"
               @click="selectcity(list,index)"  v-for="(list,index) in addressArr" :key="index" >
-              {{list.label}}
+              {{list.label ? list.label : ''}}
             </div>
           </div>
           <div class="right">
@@ -298,9 +298,9 @@ export default {
       },
       selectcity(list,index){
         this.cityname = list.label;
-        this.addressname = list.children[1].label;
+        this.addressname = list.children[0].label == '不限' ? '' : list.children[0].label;
         this.selectaddressindex = 0;
-        this.addressvalue = list.children[1].value;
+        this.addressvalue = list.children[0].value;
         this.selectcityindex = index;
         this.cityvalue = list.value;
 

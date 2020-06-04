@@ -4,7 +4,7 @@
         <div class="houseimg"><img :src="JSON.parse(list.imgArr)[0]" alt=""></div>
         <div class="meslist">
             <div class="nav_list">
-              <p class="city">{{list.cityname}}</p>
+              <p class="city">{{list.title}}</p>
             </div>
             <div class="nav_list">
               <p class="mes">

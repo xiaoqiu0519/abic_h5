@@ -80,13 +80,15 @@ export default new Vuex.Store({
                 1: '东',
                 2: '南',
                 3: '西',
-                4: '北'
+                4: '北',
+                5: '其它'
             },
             1: {
                 1: 'East',
                 2: 'South',
                 3: 'West',
-                4: 'North'
+                4: 'North',
+                5: 'Others'
             }
         },
         paymentArr: {

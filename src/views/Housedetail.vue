@@ -29,13 +29,17 @@
                         <span class="spec">{{housedetaildata.size}} ㎡</span>
                     </li>
                     <li>
+                        <span class="type">{{context.housedesc[getlanguage].use}}：</span> 
+                        <span class="spec">{{usedArr[getlanguage][housedetaildata.used]}}</span>
+                    </li>
+                    <li>
                         <span class="type">{{context.housedesc[getlanguage].faceTo}}：</span> 
                         <span>{{faceToArr[getlanguage][housedetaildata.faceto]}}</span> 
                     </li>
                     
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].tower}}：</span> 
-                        <span>T2 2110</span> 
+                        <span>{{housedetaildata.tower}}</span> 
                     </li>
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].paymentterm}}：</span> 
