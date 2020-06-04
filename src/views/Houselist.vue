@@ -243,7 +243,7 @@ export default {
 .selectsearch
   width 94%;
   //padding 0 3%;
-  margin 0.1rem auto 0.2rem;
+  margin 0.1rem auto  0rem;
   height 0.4rem; 
   line-height 0.4rem; 
   display flex;

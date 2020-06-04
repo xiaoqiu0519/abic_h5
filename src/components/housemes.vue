@@ -15,7 +15,7 @@
               </p>
             </div>
             <div class="nav_list">
-              <p class="title">{{address[getlanguage]}}：{{list.title}}</p>
+              <p class="title">{{address[getlanguage]}}：{{list.cityname}}</p>
             </div>
         </div>
     </div>
@@ -64,6 +64,7 @@ export default {
         border-bottom 1px solid #dddddd;
         display flex;
         padding-bottom 0.2rem;
+        margin-top 0.2rem;
         .houseimg
             width 1.05rem;
             display flex;
