@@ -43,7 +43,7 @@
                     </li>
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].paymentterm}}：</span> 
-                        <span>{{paymentArr[getlanguage][housedetaildata.type][housedetaildata.payment]}}</span>
+                        <span>{{paymentArr[getlanguage][1][housedetaildata.payment] || paymentArr[getlanguage][2][housedetaildata.payment]}}</span>
                     </li>
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].balcony}}：</span> 
