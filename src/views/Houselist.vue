@@ -138,6 +138,7 @@ export default {
     this.cityaddressname = this.getlanguage == 0? "城市" : "City";
     this.cityname = '不限';
     this.searchparams = {
+      status:'1',
       type:this.housetype
     }
     this.gethouselist();
