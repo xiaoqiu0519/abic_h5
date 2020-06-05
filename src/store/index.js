@@ -94,9 +94,8 @@ export default new Vuex.Store({
         paymentArr: {
             0: {
                 1: { // 买卖
-                    1: '一次性现金',
-                    2: '银行贷款',
-                    3: '其他',
+                    5: '一次性现金',
+                    6: '银行贷款',
                 },
                 2: { // 租赁
                     1: '压2付6',
@@ -104,17 +103,11 @@ export default new Vuex.Store({
                     3: '压2付2+预付支票',
                     4: '其他'
                 },
-                3: {
-                    1: '一次性现金',
-                    2: '银行贷款',
-                    3: '其他',
-                }
             },
             1: {
                 1: { // 买卖
-                    1: 'cash',
-                    2: 'bank financing',
-                    3: 'others',
+                    5: 'cash',
+                    6: 'bank financing',
                 },
                 2: { // 租赁
                     1: '2+6',
@@ -122,11 +115,6 @@ export default new Vuex.Store({
                     3: '2+2+PDC',
                     4: 'others'
                 },
-                3: {
-                    1: 'cash',
-                    2: 'bank financing',
-                    3: 'others',
-                }
             }
         },
         cityparams: '',

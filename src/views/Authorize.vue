@@ -500,16 +500,19 @@ export default {
                     margin 0 0.08rem 0 0;                       
         .textarea
             width 100%;
-            height 0.6rem;
-            line-height 0.6rem;
+            height 0.7rem;
+            line-height 0.7rem;
             display flex;
             border-bottom 1px solid #ddd;
             &>span
                 width 1rem;
             textarea
                 width 2.5rem;
+                height 0.5rem;
+                margin-top 0.05rem;
                 border 1px solid #ccc;    
                 outline none;
+                padding 0.04rem;
         .btn
             width 2.6rem;
             height 0.36rem;
