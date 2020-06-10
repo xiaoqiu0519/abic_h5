@@ -19,7 +19,7 @@ export default {
             upImgArr:[],
             uodatatxt:{
               0:'选择图片(最多选择8张)',
-              1:'Select pictures (up to 8 pictures)'
+              1:'Upload up to 8 photos'
             },
         }
     },

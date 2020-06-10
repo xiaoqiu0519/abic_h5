@@ -24,7 +24,7 @@
             <input type="text" v-else v-model="housename.name_e" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].title">
         </div>
         <div class="inputdiv">
-            <span><i> * </i> 图片</span>
+            <span><i> * </i> {{tabtext[getlanguage].picture}}</span>
             <UpFile @senddata='getMsgForm' ref="ConFile"></UpFile>
         </div>
         <div class="inputdiv">
@@ -186,10 +186,11 @@ export default {
                   title:'楼盘名称',
                   city:'城市',
                   type:'房屋用途',
-                  tower:'单元号&门牌号',
+                  tower:'楼层',
                   layout:'户型',
                   size:'面积',
                   faceto:'朝向',
+                  picture:'图片',
                   balcony:'阳台',
                   parking:'车位',
                   sellingprice:{
@@ -202,15 +203,16 @@ export default {
             },
             1:{
                   username:'Name',
-                  telphone:'Contact No',
+                  telphone:'Contact No.',
                   email:'Email',
                   title:'Project Name',
                   city:'City',
                   type:'Type',
-                  tower:'Tower/unit no',
+                  tower:'Floor',
                   layout:'Unit Type',
                   size:'Size',
                   faceto:'Face to',
+                  picture:'Photo',
                   balcony:'Balcony',
                   parking:'Parking Slot',
                   sellingprice:{
@@ -326,6 +328,8 @@ export default {
         this.addressvalue = this.addressArr[0].children[1].value
       },
       commit(){
+          
+          
           if(!this.username.trim()){
             this.alertflag = true;
             this.tiptext = this.getlanguage == 0 ? "请输入姓名" : "please enter your name"
@@ -333,17 +337,22 @@ export default {
           }
           if(!this.telphone.trim()){
             this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请输入电话" : "please enter your contact no"
+            this.tiptext = this.getlanguage == 0 ? "请输入电话" : "please enter Contact No."
             return;
           }
           if(!this.email.trim()){
             this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请输入邮箱" : "please enter your email"
+            this.tiptext = this.getlanguage == 0 ? "请输入邮箱" : "please enter Email"
             return;
           }
           if(!this.housename.name_c.trim() && !this.housename.name_e.trim()){
             this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请输入楼盘名称" : "please enter project name"
+            this.tiptext = this.getlanguage == 0 ? "请输入楼盘名称" : "please enter Project Name"
+            return;
+          }
+          if(!this.formData || !this.formData.get('images')){
+            this.alertflag = true;
+            this.tiptext = this.getlanguage == 0 ? "请上传图片" : "Please select photos"
             return;
           }
           if(!this.used){
@@ -353,7 +362,7 @@ export default {
           }
           if(!this.housetower){
             this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请输入 单元号&门牌号" : "Please enter the unit number & house number"
+            this.tiptext = this.getlanguage == 0 ? "请输入 单元号&门牌号" : "please enter Tower/unit no."
             return;
           }
           if(!this.layout){
@@ -364,7 +373,7 @@ export default {
           }
           if(!this.size){
             this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请选择房屋面积" : "Please enter the floor size"
+            this.tiptext = this.getlanguage == 0 ? "请选择房屋面积" : "please enter Size"
             return;
           }
           // if(!this.faceto){
@@ -384,7 +393,12 @@ export default {
           }
           if(!this.sellingprice){
             this.alertflag = true;
-            this.tiptext = this.getlanguage == 0 ? "请输入预售价格" : "Please enter the sellingprice"
+            if(this.navindex === 0){
+              this.tiptext = this.getlanguage == 0 ? "请输入预售价格" : "please enter Selling Price"
+            }else{
+              this.tiptext = this.getlanguage == 0 ? "请输入预期租金" : "please enter Rental"
+            }
+            
             return;
           }
           if(!this.payment){

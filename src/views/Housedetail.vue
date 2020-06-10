@@ -16,7 +16,7 @@
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].allprice}}：</span> 
                         <span class="spec">
-                            {{housedetaildata.sellingprice | formatnum}} {{housedetaildata.type == 2 ? " p/月" : " p"}}
+                            {{housedetaildata.sellingprice | formatnum}} {{housedetaildata.type == 2 ? " p/m" : " p"}}
                         </span>
                     </li>
                     
@@ -48,13 +48,13 @@
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].balcony}}：</span> 
                         <span v-if="getlanguage == 0">{{housedetaildata.balcony == 1? '有' : '无'}}</span>
-                        <span v-else>{{housedetaildata.balcony == 1? 'Y' : 'N'}}</span>
+                        <span v-else>{{housedetaildata.balcony == 1? 'Yes' : 'N/A'}}</span>
                     </li>
                       
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].parkingslot}}：</span> 
                         <span v-if="getlanguage == 0">{{housedetaildata.parking == 1? '有' : '无'}}</span>
-                        <span v-else>{{housedetaildata.parking == 1? 'Y' : 'N'}}</span>
+                        <span v-else>{{housedetaildata.parking == 1? 'Yes' : 'N/A'}}</span>
                     </li>
                     <li>
                         <span class="type">{{context.housedesc[getlanguage].city}}：</span> 
@@ -112,7 +112,7 @@ export default {
   },
   data(){
     return{
-      housedetail:{0:'房屋详情',1:'House Details'},
+      housedetail:{0:'房屋详情',1:'Details'},
       housedetaildata:'',   
       city:'',
       swiperOption: {//swiper3

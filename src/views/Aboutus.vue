@@ -16,14 +16,14 @@
             <div class="nav">
               <div class="tit">手 <span style="margin-left:0.2rem"></span> 机：</div> 
               <div class="con">
-                <p>中 <a href="tel:0063-9155800518">(0063) 9155800518</a></p>
-                <p>English <a href="tel:0063-915710777">(0063) 915710777</a></p>
+                <p>中 <a href="tel:0063-9155800518">+63 9155800518</a></p>
+                <p>English <a href="tel:0063-915710777">+63 9157100777</a></p>
               </div>
             </div> 
             <div class="nav">
               <div class="tit">座 <span style="margin-left:0.2rem"></span> 机：</div>
               <div class="con">
-                <p><a href="tel:0063-72405150">(0063) 72405150</a></p>
+                <p><a href="tel:0063-72405150">872405150</a></p>
               </div>
             </div> 
             <div class="nav">
@@ -63,14 +63,14 @@
             <div class="nav">
               <div class="tit">Mobile：</div> 
               <div class="con">
-                <p>中 <a href="tel:0063-9155800518">(0063) 9155800518</a></p>
-                <p>English <a href="tel:0063-9155800518">(0063) 915710777</a></p>
+                <p>Chinese <a href="tel:0063-9155800518">+63 9155800518</a></p>
+                <p>English <a href="tel:0063-9155800518">+63 9157100777</a></p>
               </div>
             </div> 
             <div class="nav">
               <div class="tit">Landline：</div>
               <div class="con">
-                <p><a href="tel:0063-72405150">(0063) 72405150</a></p>
+                <p><a href="tel:0063-72405150">872405150</a></p>
               </div>
             </div> 
             <div class="nav">

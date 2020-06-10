@@ -1,0 +1,111 @@
+
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+pid /usr/local/nginx/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log  logs/access.log  main;
+
+    client_max_body_size 1024M;
+
+    sendfile        on;
+    #keepalive_timeout  300;
+
+
+    upstream node_server {
+        server 127.0.0.1:3000 weight=1;
+    }
+
+    server {
+        listen       80;
+        server_name  m.abicfang.com;
+
+        location / {
+            root   /data/dist;
+            index  index.html;
+            try_files $uri $uri/ /index.html;
+        }
+
+        location /api {
+            proxy_connect_timeout 60s;
+            proxy_send_timeout 90s;
+            proxy_read_timeout 90s;
+            proxy_buffer_size 128k;
+            proxy_buffers 16 128k;
+            proxy_busy_buffers_size 128k;
+            proxy_temp_file_write_size 128k;
+            proxy_max_temp_file_size 1024m;
+            proxy_ignore_client_abort on;
+            proxy_pass http://node_server;
+        }
+
+        location /public {
+            proxy_connect_timeout 60s;
+            proxy_send_timeout 90s;
+            proxy_read_timeout 90s;
+            proxy_buffer_size 128k;
+            proxy_buffers 16 128k;
+            proxy_busy_buffers_size 128k;
+            proxy_temp_file_write_size 128k;
+            proxy_max_temp_file_size 1024m;
+            proxy_ignore_client_abort on;
+            proxy_pass http://node_server;
+        }
+	
+    }
+
+    server {
+        listen       80;
+        server_name  www.abicfang.com;
+
+        location / {
+            root   /data/console/dist;
+            index  index.html;
+            try_files $uri $uri/ /index.html;
+        }
+
+        location /api {
+            proxy_connect_timeout 60s;
+            proxy_send_timeout 90s;
+            proxy_read_timeout 90s;
+            proxy_buffer_size 128k;
+            proxy_buffers 16 128k;
+            proxy_busy_buffers_size 128k;
+            proxy_temp_file_write_size 128k;
+            proxy_max_temp_file_size 1024m;
+            proxy_ignore_client_abort on;
+            proxy_pass http://node_server;
+        }
+
+        location /public {
+            proxy_connect_timeout 60s;
+            proxy_send_timeout 90s;
+            proxy_read_timeout 90s;
+            proxy_buffer_size 128k;
+            proxy_buffers 16 128k;
+            proxy_busy_buffers_size 128k;
+            proxy_temp_file_write_size 128k;
+            proxy_max_temp_file_size 1024m;
+            proxy_ignore_client_abort on;
+            proxy_pass http://node_server;
+        }
+    }
+
+}

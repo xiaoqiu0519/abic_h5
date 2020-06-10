@@ -41,7 +41,7 @@
         <div class="con" style="width:1.3rem;" v-if="navindex == 2">
           <img class="before" src="../assets/commom/up(2).png" alt="" srcset="">
           <div>
-            <p :class="{usedclass:usedindex==0}" @click="clickused(getlanguage == 0 ? '用途' : 'Purpose',0)">{{getlanguage == 0 ? '用途' : 'Purpose'}}</p>
+            <p :class="{usedclass:usedindex==0}" @click="clickused(getlanguage == 0 ? '用途' : 'Category',0)">{{getlanguage == 0 ? '用途' : 'Category'}}</p>
             <p :class="{usedclass:usedindex==index}" @click="clickused(list,index)" v-for="(list,index) in usedArr[getlanguage]" :key="index">{{list}}</p>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default {
   mounted(){
     this.housetype = this.$route.query.type;
     this.getcity();
-    this.usedname = this.getlanguage == 0 ? '用途' : 'Purpose';
+    this.usedname = this.getlanguage == 0 ? '用途' : 'Category';
     this.layoutname = this.getlanguage ==0 ? '户型' : 'Type';
     this.pricename = this.getlanguage ==0 ? '价格' : 'Price';
     this.cityaddressname = this.getlanguage == 0? "城市" : "City";
