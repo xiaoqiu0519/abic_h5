@@ -25,10 +25,30 @@ Vue.prototype.loadingflag = function(flag) {
 Vue.filter('formatnum', (value) => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 })
-
-
-let LANGUAGETYPE = (sessionStorage.getItem('languagetype') || sessionStorage.getItem('languagetype') == 0) ?
-    sessionStorage.getItem('languagetype') : 0; //0中文   1英文  
+Vue.filter('formatDate',(dateStr, pattern = '')=>{
+    var dt = new Date(dateStr)
+    var yy = dt.getFullYear()
+    var mm = dt.getMonth() + 1 < 10 ? '0' + dt.getMonth() : dt.getMonth()
+    var dd = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate()
+    var h = dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()
+    var m = dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes()
+    var s = dt.getSeconds() < 10 ? '0' + dt.getSeconds() : dt.getSeconds()
+    if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+        return yy + '-' + mm + '-' + dd
+    } else {
+        return yy + '-' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s
+    }
+})
+let LANGUAGETYPE = ''
+if(sessionStorage.getItem('languagetype') == 0 || sessionStorage.getItem('languagetype')){
+    LANGUAGETYPE = sessionStorage.getItem('languagetype'); 
+}else{
+    if(location.host.includes('abicrealty')){
+        LANGUAGETYPE = 1
+    }else{
+        LANGUAGETYPE = 0
+    }
+}
 sessionStorage.setItem('languagetype', LANGUAGETYPE)
 store.dispatch('ChangeLangugaeAsy', LANGUAGETYPE);
 

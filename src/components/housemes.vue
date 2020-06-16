@@ -8,9 +8,9 @@
             </div>
             <div class="nav_list">
               <p class="mes">
-                <span>{{layoutArr[getlanguage][list.layout]}}</span> / 
-                <span>{{list.size}}㎡</span> /
-                <span>{{paymentArr[getlanguage][housetype][list.payment]}}</span> / 
+                <span>{{layoutArr[getlanguage][list.layout]}}</span>/ 
+                <span>{{list.size}}㎡</span>/
+                <span>{{paymentArr[getlanguage][housetype][list.payment]}}</span>/ 
                 <span class="price">{{list.sellingprice | formatnum}} {{list.type == 2 ? " p/月" : " p"}}</span>
               </p>
             </div>
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div v-if="doneflag" class="done">数据加载完成</div>
+    <div v-if="doneflag" class="done">{{datadone[getlanguage]}}</div>
   </div>
 </template>
 <script>
@@ -30,6 +30,7 @@ export default {
   },
   data(){
       return{
+          datadone:{0:'数据加载完成',1:'Data loading is complete'},
           huxing:{0:'户型',1:'layout'},
           mianji:{0:'面积',1:'size'},
           address:{0:'地址',1:'address'},

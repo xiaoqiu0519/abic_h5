@@ -12,6 +12,17 @@
             <div class="con">{{list.answer}}</div>
         </div>
     </div>
+    <div class="newscon" v-else>
+      <div class="list" @click="godetail(list)" v-for="(list,index) in advisorydata[getlanguage]" :key="index">
+        <div class="title">
+          <p>{{list.title}}</p>
+          <p class="time">{{list.createtime | formatDate('yyyy-mm-dd')}}</p>
+        </div>
+        <div class="img" v-if='advisorydata[getlanguage][index].imgArr.length != 0'>
+          <img :src="advisorydata[getlanguage][index].imgArr[0]" alt="">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,20 +35,36 @@ export default {
   data(){
     return{
       navindex:0,
-      questentArr:[]
+      questentArr:[],
+      advisorydata:[],
+      conarr:'',
+      sloganImg:''
     }
   },
   components:{
     Header
   },
   mounted(){
-    this.getlist()
+    this.navindex = sessionStorage.getItem('navindex') || 0
+    this.init()
+    
   },
   methods:{
-      clicknav(index){
-          this.navindex = index;
+      init(){
+        if(this.navindex == 0){
+          this.questentgetlist()
+        }else if(this.navindex == 1){
+          this.advisorylist('/advisory/list')
+        }else{
+          this.advisorylist()
+        }
       },
-      getlist(){
+      clicknav(index){
+        this.navindex = index;
+        this.init()
+        sessionStorage.setItem('navindex',index)
+      },
+      questentgetlist(){
         this.loadingflag(true)
         this.$post("/questent/getlist").then((res)=>{
           this.loadingflag(false)
@@ -45,7 +72,46 @@ export default {
             this.questentArr = res.data;
           }
         })
-      }
+      },
+      advisorylist(url){
+        this.advisorydata = []
+        this.loadingflag(true)
+        this.$post(url).then((res)=>{
+          this.loadingflag(false)
+          if(res.error == '0000'){
+            this.advisorydata = res.data
+
+            for (let i = 0; i < res.data[0].length; i++) {
+              this.advisorydata[0][i]['imgArr'] = []
+              this.advisorydata[1][i]['imgArr'] = []
+              let conarr = ''
+              if(this.getlanguage == 0){
+                conarr =  JSON.parse(res.data[0][i].content).sort(this.compare('num'))
+              }else{
+                conarr =  JSON.parse(res.data[1][i].content).sort(this.compare('num'))
+              }
+              // console.log(conarr)
+              for(let j = 0; j < conarr.length ; j++ ){
+                if(conarr[j].type == 2){
+                  this.advisorydata[0][i].imgArr.push(conarr[j].img)
+                  this.advisorydata[1][i].imgArr.push(conarr[j].img)
+                }
+              }
+            }
+          }
+        })
+      },
+      compare(property){
+        return function(a,b){
+            var value1 = a[property];
+            var value2 = b[property];
+            return value1 - value2;
+        }
+      },
+      godetail(list){
+        this.$router.push('/property?id='+ list.id)
+      } 
+
   }
 }
 </script>
@@ -79,5 +145,32 @@ export default {
                 font-weight 600; 
                 margin-bottom 0.1rem;
             .con
-                line-height 0.2rem;           
+                line-height 0.2rem; 
+    .newscon
+      width 94%;
+      margin 0 auto;
+      padding-bottom 0.2rem;
+      .list
+        width 100%;
+        height 1rem;
+        padding 0.1rem 0;
+        display flex;
+        justify-content space-between;
+        border-bottom 1px solid #ddd;
+        align-items center;
+        .title
+          display flex;
+          flex-wrap wrap;
+          p
+            width 100%;
+          .time
+            margin-top 0.1rem;
+            color: #999
+            font-size 0.12rem;
+        .img
+          width 1.5rem;
+          height 1rem; 
+          img
+            width 1.5rem;
+            height 1rem;                    
 </style>

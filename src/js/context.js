@@ -27,7 +27,7 @@ let context = {
     },
     blacknavtxt: {
         0: [{ 'title': '真实案例' }, { 'title': '欢迎投稿' }],
-        1: [{ 'title': 'True Story' }, { 'title': 'My Complaints' }]
+        1: [{ 'title': 'True Story' }, { 'title': 'Contact us' }]
     },
     housedesc: {
         0: {

@@ -31,34 +31,34 @@ export default new Vuex.Store({
                 4: '电视机',
                 5: '桌椅',
                 6: '沙发',
-                7: '茶几',
                 8: '床',
-                9: '空调'
+                9: '空调',
+                7: '无',
             },
             1: {
-                1: 'washing machine',
-                2: 'water heater',
-                3: 'ref',
+                1: 'Washing Machine',
+                2: 'Water Heater',
+                3: 'Refrigerator',
                 4: 'TV',
-                5: 'Table&chair',
-                6: 'sofa',
-                7: 'center table',
-                8: 'bed',
-                9: 'aircon'
+                5: 'Table&Chair',
+                6: 'Sofa',
+                8: 'Bed',
+                9: 'Aircon',
+                7: 'None',
             }
         },
         surroundingArr: {
             0: {
-                1: '学校',
-                2: '超市',
-                3: '健身房',
-                4: '公园'
+                1: '健身房',
+                2: '游泳池',
+                3: '篮球场',
+                4: '儿童乐园'
             },
             1: {
-                1: 'School',
-                2: 'Mall',
-                3: 'Gym',
-                4: 'Park'
+                1: 'Gym',
+                2: 'Swimming poll',
+                3: 'Basketball Court',
+                4: 'Kids playground'
             }
         },
         usedArr: {
@@ -98,7 +98,7 @@ export default new Vuex.Store({
                     6: '银行贷款',
                 },
                 2: { // 租赁
-                    1: '压2付2+预付支票',
+                    1: '压2付2+支票',
                     2: '压2付6',
                     3: '压2付12',
                     4: '其他'
@@ -113,7 +113,6 @@ export default new Vuex.Store({
                     1: '2+2+PDC',
                     2: '2+6',
                     3: '2+12',
-
                     4: 'others'
                 },
             }
