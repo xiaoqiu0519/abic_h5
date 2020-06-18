@@ -31,9 +31,10 @@ export default new Vuex.Store({
                 4: '电视机',
                 5: '桌椅',
                 6: '沙发',
-                8: '床',
-                9: '空调',
-                7: '无',
+                7: '床',
+                8: '空调',
+                9: '无',
+                
             },
             1: {
                 1: 'Washing Machine',
@@ -42,9 +43,10 @@ export default new Vuex.Store({
                 4: 'TV',
                 5: 'Table&Chair',
                 6: 'Sofa',
-                8: 'Bed',
-                9: 'Aircon',
-                7: 'None',
+                7: 'Bed',
+                8: 'Aircon',
+                9: 'None',
+                
             }
         },
         surroundingArr: {

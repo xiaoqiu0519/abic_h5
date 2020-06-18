@@ -1,7 +1,10 @@
 <template>
   <div class="houselist" v-if="housedata[getlanguage]">
     <div class="list" v-for="(list,index) in housedata[getlanguage]" :key="index" @click="gohouserdetail(list)">
-        <div class="houseimg"><img :src="JSON.parse(list.imgArr)[0]" alt=""></div>
+        <div class="houseimg">
+          <img class="housepic" :src="JSON.parse(list.imgArr)[0]" alt="">
+          <span class="newhouse" v-if="list.isnew == 1"></span>
+        </div>
         <div class="meslist">
             <div class="nav_list">
               <p class="city">{{list.title}}</p>
@@ -66,14 +69,37 @@ export default {
         display flex;
         padding-bottom 0.2rem;
         margin-top 0.2rem;
+        position relative;
         .houseimg
             width 1.05rem;
             display flex;
             justify-content center;
             align-items center;
-            img
-                width 1rem;
-                height 0.75rem;    
+            position relative;
+            overflow hidden;
+            .housepic
+              width 100%;
+              height 0.75rem; 
+            .newhouse
+              width 0rem;
+              height 0rem;
+              position absolute;
+              left -0.05rem;
+              top -0.2rem;
+              border-left 0.3rem solid red;
+              border-top 0.3rem solid transparent;
+              border-bottom 0.3rem solid transparent; 
+              transform rotate(-135deg)   
+              &::after
+                display inline-block;
+                content:'New' 
+                text-align center;
+                position absolute;
+                left -0.35rem;
+                top -0.1rem;
+                color white;
+                transform rotate(-270deg) 
+                font-size 0.13rem;
         .meslist
             width 2.3rem;
             margin-left 0.1rem;

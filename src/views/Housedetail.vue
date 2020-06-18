@@ -65,7 +65,7 @@
                         <span class="type">{{context.housedesc[getlanguage].furniture}}：</span>
                         <p>
                             <i v-for="(list,index) in JSON.parse(housedetaildata.furniture)" :key="index">
-                                {{furnitureArr[getlanguage][list]}}、
+                                {{furnitureArr[getlanguage][list]}}<i v-if="index != JSON.parse(housedetaildata.furniture).length - 1">、</i>
                             </i> 
                         </p>
                         
@@ -75,7 +75,7 @@
                         <span class="type">{{context.housedesc[getlanguage].surrounding}}：</span>
                         <p>
                             <i v-for="(list,index) in JSON.parse(housedetaildata.surrounding)" :key="index">
-                                {{surroundingArr[getlanguage][list]}}、
+                                {{surroundingArr[getlanguage][list]}} <i v-if="index != JSON.parse(housedetaildata.surrounding).length - 1">、</i>
                             </i> 
                         </p>
                     </li>

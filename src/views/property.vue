@@ -15,8 +15,7 @@ export default {
   data(){
     return{
       title:{
-        0:'房产资讯',
-        1:'Property'
+        
       },
       contitle:'',
       content:'',
@@ -27,6 +26,17 @@ export default {
     Header
   },
   mounted(){
+    if(this.$route.query.type && this.$route.query.type == 1){
+      this.title = {
+        0:'房产资讯',
+        1:'Property'
+      }
+    }else{
+      this.title = {
+        0:'菲常见闻',
+        1:'Entertainment'  
+      }
+    }
     this.$post('/advisory/advisorydetail',{
       id:this.$route.query.id
     }).then((res)=>{

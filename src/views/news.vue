@@ -13,14 +13,19 @@
         </div>
     </div>
     <div class="newscon" v-else>
-      <div class="list" @click="godetail(list)" v-for="(list,index) in advisorydata[getlanguage]" :key="index">
-        <div class="title">
-          <p>{{list.title}}</p>
-          <p class="time">{{list.createtime | formatDate('yyyy-mm-dd')}}</p>
+      <div v-if="advisorydata[getlanguage] && advisorydata[getlanguage].length != 0">
+        <div class="list" @click="godetail(list)" v-for="(list,index) in advisorydata[getlanguage]" :key="index">
+          <div class="title">
+            <p>{{list.title}}</p>
+            <p class="time">{{list.createtime | formatDate('yyyy-mm-dd')}}</p>
+          </div>
+          <div class="img" v-if='advisorydata[getlanguage][index].imgArr.length != 0'>
+            <img :src="advisorydata[getlanguage][index].imgArr[0]" alt="">
+          </div>
         </div>
-        <div class="img" v-if='advisorydata[getlanguage][index].imgArr.length != 0'>
-          <img :src="advisorydata[getlanguage][index].imgArr[0]" alt="">
-        </div>
+      </div>
+      <div v-else style="margin-top:1rem">
+        <Nodata :tip='tip'></Nodata>
       </div>
     </div>
   </div>
@@ -28,6 +33,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import Header from '../components/header'
+import Nodata from '../components/nodata'
 export default {
   computed:{
     ...mapGetters(['getlanguage'])
@@ -38,11 +44,16 @@ export default {
       questentArr:[],
       advisorydata:[],
       conarr:'',
-      sloganImg:''
+      sloganImg:'',
+      tip:{
+          0:'暂无数据',
+          1:'no data'
+      },
     }
   },
   components:{
-    Header
+    Header,
+    Nodata
   },
   mounted(){
     this.navindex = sessionStorage.getItem('navindex') || 0
@@ -54,9 +65,9 @@ export default {
         if(this.navindex == 0){
           this.questentgetlist()
         }else if(this.navindex == 1){
-          this.advisorylist('/advisory/list')
+          this.advisorylist(1)
         }else{
-          this.advisorylist()
+          this.advisorylist(2)
         }
       },
       clicknav(index){
@@ -73,14 +84,18 @@ export default {
           }
         })
       },
-      advisorylist(url){
+      advisorylist(newtype){
         this.advisorydata = []
         this.loadingflag(true)
-        this.$post(url).then((res)=>{
+        this.$post('/advisory/list',{
+          params:JSON.stringify({
+              type:newtype,
+              status:1
+          }),
+        }).then((res)=>{
           this.loadingflag(false)
           if(res.error == '0000'){
             this.advisorydata = res.data
-
             for (let i = 0; i < res.data[0].length; i++) {
               this.advisorydata[0][i]['imgArr'] = []
               this.advisorydata[1][i]['imgArr'] = []
@@ -90,7 +105,6 @@ export default {
               }else{
                 conarr =  JSON.parse(res.data[1][i].content).sort(this.compare('num'))
               }
-              // console.log(conarr)
               for(let j = 0; j < conarr.length ; j++ ){
                 if(conarr[j].type == 2){
                   this.advisorydata[0][i].imgArr.push(conarr[j].img)
@@ -109,7 +123,7 @@ export default {
         }
       },
       godetail(list){
-        this.$router.push('/property?id='+ list.id)
+        this.$router.push('/property?id='+ list.id + '&type=' + this.navindex)
       } 
 
   }
