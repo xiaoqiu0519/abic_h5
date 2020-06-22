@@ -1,7 +1,7 @@
 <template>
     <div class="imglist">
         <div class="title">
-            <input type="file"  name="file" ref="file" multiple @change="changeFile" accept=".jpg, .jpeg, .png"/>
+            <input type="file"  name="file" ref="file" multiple @change="changeFile"/>
             <span>{{uodatatxt[getlanguage]}}</span>
         </div>
         <div class="imgArr">
@@ -31,10 +31,14 @@ export default {
         this.formData = new FormData();
         let file = this.$refs.file
         this.upImgArr = []
-        file.files.forEach((ele) => {
-            this.formData.append('images', ele)
-            this.upImgArr.push(URL.createObjectURL(ele))
-        })
+        for(let i = 0 ; i < file.files.length ; i ++){
+            if (!new RegExp("(jpg|jpeg|gif|png|webp)+","gi").test(file.files[i].type)) {
+                this.$emit('alertfun')
+                return
+            }
+            this.formData.append('images', file.files[i])
+            this.upImgArr.push(URL.createObjectURL(file.files[i]))
+        }
         this.$emit('senddata',this.formData)
       },
       clearImg(){

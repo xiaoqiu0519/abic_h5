@@ -14,7 +14,8 @@
                 <span>{{layoutArr[getlanguage][list.layout]}}</span>/ 
                 <span>{{list.size}}㎡</span>/
                 <span>{{paymentArr[getlanguage][housetype][list.payment]}}</span>/ 
-                <span class="price">{{list.sellingprice | formatnum}} {{list.type == 2 ? " p/月" : " p"}}</span>
+                <span class="price" v-if="getlanguage == 0">{{list.sellingprice | formatnum}} {{list.type == 2 ? " p/月" : " p"}}</span>
+                <span class="price" v-else>{{list.sellingprice | formatnum}} {{list.type == 2 ? " p/m" : " p"}}</span>
               </p>
             </div>
             <div class="nav_list">

@@ -37,7 +37,7 @@
             </div>
             <div class="updata">
                 <span>{{conformtxt[getlanguage].updateimg}}：</span>
-                <UpFile @senddata='getMsgForm' ref="ConFile"></UpFile>
+                <UpFile @senddata='getMsgForm'  @alertfun='alertfun' ref="ConFile"></UpFile>
             </div>
             <div class="inputdiv">
                 <span>{{conformtxt[getlanguage].telphpne}}：</span>
@@ -146,6 +146,10 @@ export default {
       goblackcon(list){
           sessionStorage.setItem('blackdetail',JSON.stringify(list))
           this.$router.push('/blackcon')
+      },
+      alertfun(){
+        this.alertflag = true;
+        this.tiptext = this.getlanguage == 0 ? "您上传的图片格式有误，请重新上传~" : "The format of the picture you uploaded is wrong, please upload again~"
       },
       surebtn(){
           if(!this.title){

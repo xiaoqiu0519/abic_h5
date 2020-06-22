@@ -58,9 +58,9 @@ export default new Vuex.Store({
             },
             1: {
                 1: 'Gym',
-                2: 'Swimming poll',
+                2: 'Swimming Poll',
                 3: 'Basketball Court',
-                4: 'Kids playground'
+                4: 'Kids Playground'
             }
         },
         usedArr: {
@@ -71,10 +71,10 @@ export default new Vuex.Store({
                 4: '土地'
             },
             1: {
-                1: 'condo',
-                2: 'office',
-                3: 'commercial space',
-                4: 'land'
+                1: 'Condo',
+                2: 'Office',
+                3: 'Commercial Space',
+                4: 'Land'
             }
         },
         faceToArr: {
@@ -108,14 +108,14 @@ export default new Vuex.Store({
             },
             1: {
                 1: { // 买卖
-                    5: 'cash',
-                    6: 'bank financing',
+                    5: 'Cash',
+                    6: 'Bank Financing',
                 },
                 2: { // 租赁
                     1: '2+2+PDC',
                     2: '2+6',
                     3: '2+12',
-                    4: 'others'
+                    4: 'Others'
                 },
             }
         },

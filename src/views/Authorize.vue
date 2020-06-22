@@ -25,7 +25,7 @@
         </div>
         <div class="inputdiv">
             <span><i> * </i> {{tabtext[getlanguage].picture}}</span>
-            <UpFile @senddata='getMsgForm' ref="ConFile"></UpFile>
+            <UpFile @senddata='getMsgForm' @alertfun='alertfun' ref="ConFile"></UpFile>
         </div>
         <div class="inputdiv">
             <span><i> * </i> {{tabtext[getlanguage].city}}</span>
@@ -175,7 +175,7 @@ export default {
         },
         commitbtn:{
             0:'确认提交',
-            1:'submission'
+            1:'Submit'
         },
         tiptext:'',
         tabtext:{
@@ -327,9 +327,11 @@ export default {
         this.addressname = this.addressArr[0].children[1].label
         this.addressvalue = this.addressArr[0].children[1].value
       },
+      alertfun(){
+        this.alertflag = true;
+        this.tiptext = this.getlanguage == 0 ? "您上传的图片格式有误，请重新上传~" : "The format of the picture you uploaded is wrong, please upload again~"
+      },
       commit(){
-          
-          
           if(!this.username.trim()){
             this.alertflag = true;
             this.tiptext = this.getlanguage == 0 ? "请输入姓名" : "please enter your name"

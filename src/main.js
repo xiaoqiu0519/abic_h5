@@ -28,7 +28,7 @@ Vue.filter('formatnum', (value) => {
 Vue.filter('formatDate',(dateStr, pattern = '')=>{
     var dt = new Date(dateStr)
     var yy = dt.getFullYear()
-    var mm = dt.getMonth() + 1 < 10 ? '0' + dt.getMonth() : dt.getMonth()
+    var mm = dt.getMonth() < 9 ? '0' + (Number(dt.getMonth()) + 1) : dt.getMonth()
     var dd = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate()
     var h = dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()
     var m = dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes()
