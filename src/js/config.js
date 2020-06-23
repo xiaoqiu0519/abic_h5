@@ -10,6 +10,7 @@ service.interceptors.request.use(config => {
     config.isForm ?
         config.headers["content-type"] = "application/x-www-form-urlencoded" :
         config.headers["content-type"] = "application/json"
+    config.headers['appid'] = 'abic_h5'    
     return config
 }, error => {
     Promise.reject(error)

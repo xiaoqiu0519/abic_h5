@@ -443,6 +443,7 @@ export default {
               if(res.error == '0000'){
                 this.alertflag = true;
                 this.tiptext = '提交成功，待后台审核'
+                window.location.reload()
               }
             })
       }
