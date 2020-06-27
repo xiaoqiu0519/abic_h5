@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <header>
-     <img class="logo" src="../assets/index/abiclogo.png" alt="" srcset="">
-     <translation></translation>
+    <img class="logo" src="../assets/index/abiclogo.png" alt="" srcset="">
+    <translation></translation>
     </header>
     <div class="houseimg">
         <Swiper :options="swiperOption">
@@ -15,7 +15,7 @@
         </Swiper>
     </div>
     <div class="navcon">
-     <div class="list" @click="clicknav(index)"
+    <div class="list" @click="clicknav(index)"
         v-for="(item,index) in context.navtype[getlanguage]" :key="index">
         <p><img :src="navarrimg[index]" alt=""></p>
         <p>{{item}}</p>
@@ -40,7 +40,7 @@
     <div class="typelist" v-if="tjfyArr && tjfyArr[getlanguage] && tjfyArr[getlanguage].length !=0">
       <p class="title"  @click="clicknav(2)">
         <span class="type">{{context.tjyy[getlanguage].type}}</span>
-         <!-- <span class="slogan">{{context.tjyy[getlanguage].slogan}}</span> -->
+        <!-- <span class="slogan">{{context.tjyy[getlanguage].slogan}}</span> -->
         <img class="more" src="../assets/commom/right(2).png" alt="" srcset="">
       </p>
       <houselist :housedata = 'tjfyArr'></houselist>
@@ -113,32 +113,16 @@ export default {
       housedata:'',
       sloganArr:[
         {
-          img:require('../assets/index/1.jpg'),
-          txt:{
-            0: '诚信所以简单，专业所以放心',
-            1: 'Itegrity and professional make you feel easy and relax'
-          }
+          img:require('../assets/index/1.jpeg'),
         },
         {
-          img:require('../assets/index/2.jpg'),
-          txt:{
-            0: '轻松购房，交易无忧',
-            1: 'Easy transaction , Worry free'
-          }
+          img:require('../assets/index/2.jpeg'),
         },
         {
-          img:require('../assets/index/3.jpg'),
-          txt:{
-            0: '搜你所求，安心入住',
-            1: 'Rent it , Hassle free'
-          }
+          img:require('../assets/index/3.jpeg'),
         },
         {
-          img:require('../assets/index/4.jpg'),
-          txt:{
-            0: '机不可失，物超所值',
-            1: 'Worthy to buy ,No hidden charge'
-          }
+          img:require('../assets/index/4.jpeg'),
         }
       ],
       swiperOption: {//swiper3
@@ -162,7 +146,6 @@ export default {
   },
   mounted(){
     this.cityparams = this.cityvalue + '-' +this.addressvalue
-    // this.getcity();
     this.init();
   },
   methods: {
@@ -187,6 +170,8 @@ export default {
         pageSize: 1,
         params:JSON.stringify({type:3,status:1,city:this.cityparams})
       });
+      sessionStorage.setItem('sesssearchparams','')
+      sessionStorage.setItem('priceindex','')
     },
     getcity(){
       if(sessionStorage.getItem('sessioncitydata') && sessionStorage.getItem('cityparams')){

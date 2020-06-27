@@ -12,7 +12,7 @@
         </div>
         <div class="inputdiv">
             <span><i> * </i> {{tabtext[getlanguage].telphone}}</span>
-             <input type="text" v-model="telphone" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].telphone">
+            <input type="text" v-model="telphone" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].telphone">
         </div>
         <div class="inputdiv">
             <span><i> * </i> {{tabtext[getlanguage].email}}</span>
@@ -52,7 +52,7 @@
             <span><i> * </i> {{tabtext[getlanguage].layout}}</span>
             <div class="radiolist">
                 <span v-for="(list,index) in layoutArr[getlanguage]" :key="index">
-                    <input v-model="layout" :value="index" type="radio" name="layout" id="">{{list}}
+                  <input v-model="layout" :value="index" type="radio" name="layout" id="">{{list}}
                 </span>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <span><i>  </i> {{tabtext[getlanguage].faceto}}</span>
             <div class="radiolist">
                 <span v-for="(list,index) in faceToArr[getlanguage]" :key="index">
-                    <input v-model="faceto" :value='index' type="radio" name="faceto" id="">{{list}}
+                  <input v-model="faceto" :value='index' type="radio" name="faceto" id="">{{list}}
                 </span>
             </div>
         </div>
@@ -79,8 +79,8 @@
         <div class="inputradio">
             <span><i> * </i> {{tabtext[getlanguage].parking}}</span>
             <div class="radiolist">
-                <span><input type="radio" v-model="parking" value="1" name="parking" id="">{{getlanguage==0?'有':'Y'}}</span>
-                <span><input type="radio" v-model="parking" value="2" name="parking" id="">{{getlanguage==0?'无':'N'}}</span>
+              <span><input type="radio" v-model="parking" value="1" name="parking" id="">{{getlanguage==0?'有':'Y'}}</span>
+              <span><input type="radio" v-model="parking" value="2" name="parking" id="">{{getlanguage==0?'无':'N'}}</span>
             </div>
         </div>
         <div class="inputdiv">
@@ -91,7 +91,7 @@
             <span><i> * </i> {{tabtext[getlanguage].payment}}</span>
             <div class="radiolist">
                 <span v-for="(list,index) in paymentArr[getlanguage][navindex+1]" :key="index">
-                    <input v-model="payment" :value="index" type="radio" name="payment" id="">{{list}}
+                  <input v-model="payment" :value="index" type="radio" name="payment" id="">{{list}}
                 </span>
             </div>
         </div>
@@ -104,7 +104,7 @@
             <span>{{tabtext[getlanguage].furniture}}</span>
             <div class="radiolist">
                 <span v-for="(list,index) in furnitureArr[getlanguage]" :key="index">
-                    <input type="checkbox" v-model="furniture" :value="index" id="">{{list}}
+                  <input type="checkbox" v-model="furniture" :value="index" id="">{{list}}
                 </span>
             </div> 
         </div>
@@ -112,8 +112,8 @@
     </div>
     <div class="alertbox" @touchmove.prevent v-if="alertflag">
         <div class="tip">
-            <img src="../assets/commom/tip.png" alt="" srcset="">
-            {{tiptext}}
+          <img src="../assets/commom/tip.png" alt="" srcset="">
+          {{tiptext}}
         </div>
     </div>
     <div class="cityshadebox" v-if="selectflag">
@@ -442,8 +442,10 @@ export default {
               this.loadingflag(false)
               if(res.error == '0000'){
                 this.alertflag = true;
-                this.tiptext = '提交成功，待后台审核'
-                window.location.reload()
+                this.tiptext = this.getlanguage == 0 ? "提交成功，待后台审核" : "submit successfully"
+                setTimeout(()=>{
+                  window.location.reload()
+                },1200)
               }
             })
       }

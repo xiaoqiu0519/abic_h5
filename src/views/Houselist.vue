@@ -73,8 +73,8 @@
         </div>
       </div>
     </div>
-    <houselist :housedata = 'housedata' :doneflag='1' v-if="housedata[getlanguage] && housedata[getlanguage].length !=0"></houselist>
-    <Nodata v-else></Nodata>
+      <houselist :housedata = 'housedata' :searchparams='searchparams' :doneflag='1' v-if="housedata[getlanguage] && housedata[getlanguage].length !=0"></houselist>
+      <Nodata v-else></Nodata>
   </div>
 </template>
 <script>
@@ -89,6 +89,7 @@ export default {
   data(){
     return{
       cityparams:'',
+      sesssearchparams:'',
       cityvalue:0,
       addressvalue:0,
       housedata:[],
@@ -131,16 +132,35 @@ export default {
   },
   mounted(){
     this.housetype = this.$route.query.type;
+    this.sesssearchparams = sessionStorage.getItem('sesssearchparams') ? 
+      JSON.parse(sessionStorage.getItem('sesssearchparams')) : ''
+    let priceindex = sessionStorage.getItem('priceindex')  
+    // this.usedname = this.getlanguage == 0 ? '用途' : 'Category';
+    // this.layoutname = this.getlanguage ==0 ? '户型' : 'Type';
+    // this.pricename = this.getlanguage ==0 ? '价格' : 'Price';
+    // this.cityaddressname = this.getlanguage == 0? "城市" : "City";
+
+    
     this.getcity();
-    this.usedname = this.getlanguage == 0 ? '用途' : 'Category';
-    this.layoutname = this.getlanguage ==0 ? '户型' : 'Type';
-    this.pricename = this.getlanguage ==0 ? '价格' : 'Price';
-    this.cityaddressname = this.getlanguage == 0? "城市" : "City";
-    this.cityname = '不限';
-    this.searchparams = {
-      status:'1',
-      type:this.housetype
+    if(this.sesssearchparams.used){
+      this.usedname = this.usedArr[this.getlanguage][this.sesssearchparams.used]
+    }else{
+      this.usedname = this.getlanguage == 0 ? '用途' : 'Category';
     }
+    if(this.sesssearchparams.type){
+      this.layoutname = this.layoutArr[this.getlanguage][this.sesssearchparams.type]
+    }else{
+      this.layoutname = this.getlanguage ==0 ? '户型' : 'Type';
+    }
+    if(priceindex){
+      this.priceindex = priceindex;
+      this.pricename = this.priceArr[this.getlanguage][priceindex]
+    }else{
+      this.pricename = this.getlanguage ==0 ? '价格' : 'Price';
+    }
+    this.cityname = '不限';
+    this.searchparams = {status:'1',type:this.housetype}
+    for (const key in this.sesssearchparams) {this.searchparams[key] = this.sesssearchparams[key]}
     this.gethouselist();
   },
   methods:{
@@ -171,11 +191,9 @@ export default {
     clickcity(){
       this.navindex = 1;
     },
-    clearbtn(){
-
-    },
+    clearbtn(){},
     sharebtn(){
-      this.cityaddressname = this.cityname + (!this.addressvalue ?' '+this.addressname : '')
+      this.cityaddressname = this.cityname + (this.addressvalue ? this.addressname  : '')
       this.searchparams.city = this.cityvalue + '-' +this.addressvalue
       this.gethouselist();
     },
@@ -183,6 +201,20 @@ export default {
       this.$get('/others/getcity').then((res)=>{
           if(res.error == '0000'){
             this.addressArr = res.data
+            if(this.sesssearchparams.city){
+              let citystr = this.sesssearchparams.city.split('-')
+              this.addressArr[this.getlanguage].map((ele)=>{
+                if(ele.value === citystr[0]){
+                  ele.children.map((arg)=>{
+                    if(arg.value === citystr[1]){
+                      this.cityaddressname = ele.label + (arg.value === '' ? '' : arg.label) 
+                    }
+                  })
+                }
+              })
+            }else{
+              this.cityaddressname = this.getlanguage == 0? "城市" : "City";
+            }
           }
       })
     },
@@ -200,37 +232,26 @@ export default {
     },
     clickPrice(list,index){
       this.priceindex = index;
+      sessionStorage.setItem('priceindex',this.priceindex)
       this.pricename = list; 
       switch(index){
         case 0:
-          this.searchparams.price = {
-            min:0,max:NaN
-          }
+          this.searchparams.price = {min:0,max:NaN}
           break;
         case "1":
-          this.searchparams.price = {
-            min:0,max:30000
-          }
+          this.searchparams.price = {min:0,max:30000}
         break;
         case "2":
-          this.searchparams.price = {
-            min:30000,max:50000
-          }
+          this.searchparams.price = {min:30000,max:50000}
         break;
         case "3":
-          this.searchparams.price = {
-            min:50000,max:70000
-          }
+          this.searchparams.price = {min:50000,max:70000}
         break;
         case "4":
-          this.searchparams.price = {
-            min:70000,max:100000
-          }
+          this.searchparams.price = {min:70000,max:100000}
         break;
         case "5":
-          this.searchparams.price = {
-            min:100000,max:NaN
-          }
+          this.searchparams.price = {min:100000,max:NaN}
         break;
       }
       this.gethouselist();

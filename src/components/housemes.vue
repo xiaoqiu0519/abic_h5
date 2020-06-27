@@ -43,7 +43,7 @@ export default {
           housetype:'',
       }
   },
-  props:['housedata','doneflag'],
+  props:['housedata','doneflag','searchparams'],
   created(){
     this.housetype = this.housedata[0][0].type == 2 ? 2 : 1;
     if(!this.housetype){
@@ -51,12 +51,13 @@ export default {
     }
   },
   mounted(){
-    
+    // console.log(this.searchparams)
   },
   methods:{
     gohouserdetail(list){
       this.$router.push('/housedetail');
       sessionStorage.setItem('sesshousedetail',JSON.stringify(list))
+      sessionStorage.setItem('sesssearchparams',JSON.stringify(this.searchparams))
     }
   }
 }
