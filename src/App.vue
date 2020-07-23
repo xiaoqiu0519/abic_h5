@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
     <div class="online">
-      <a href="tel:0147-88469258">
+      <a href="tel:09155800518">
         <img src="./assets/commom/zxkf.png" alt="" srcset="">
         <p class="selectfontcolor">{{Customer[getlanguage]}}</p>
       </a>

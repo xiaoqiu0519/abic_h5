@@ -11,7 +11,7 @@
             </div>
             <div class="nav_list">
               <p class="mes">
-                <span>{{layoutArr[getlanguage][list.layout]}}</span>/ 
+                <span v-if="list.used == 1">{{layoutArr[getlanguage][list.layout]}}/</span> 
                 <span>{{list.size}}㎡</span>/
                 <span>{{paymentArr[getlanguage][housetype][list.payment]}}</span>/ 
                 <span class="price" v-if="getlanguage == 0">{{list.sellingprice | formatnum}} {{list.type == 2 ? " p/月" : " p"}}</span>

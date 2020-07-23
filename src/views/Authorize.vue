@@ -48,7 +48,7 @@
             <span><i> * </i> {{tabtext[getlanguage].tower}}</span>
             <input type="text" v-model="housetower" :placeholder="pleaseenter[getlanguage] + ' ' + tabtext[getlanguage].tower">
         </div>
-        <div class="inputradio">
+        <div class="inputradio" v-if="used == 1">
             <span><i> * </i> {{tabtext[getlanguage].layout}}</span>
             <div class="radiolist">
                 <span v-for="(list,index) in layoutArr[getlanguage]" :key="index">
@@ -367,9 +367,8 @@ export default {
             this.tiptext = this.getlanguage == 0 ? "请输入 单元号&门牌号" : "please enter Tower/unit no."
             return;
           }
-          if(!this.layout){
+          if(!this.layout && this.used == 1){
             this.alertflag = true;
-
             this.tiptext = this.getlanguage == 0 ? "请选择房屋户型" : "Please select house type"
             return;
           }

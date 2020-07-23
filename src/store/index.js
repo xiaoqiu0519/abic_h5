@@ -11,7 +11,7 @@ export default new Vuex.Store({
                 2: '1室1厅',
                 3: '2室1厅',
                 4: '3室1厅',
-                5: '别墅',
+                5: '房屋',
             },
             1: {
                 1: 'Studio',
@@ -43,7 +43,7 @@ export default new Vuex.Store({
                 6: 'Sofa',
                 7: 'Bed',
                 8: 'Aircon',
-                9: 'None',
+                9: 'N/A',
                 
             }
         },
@@ -52,27 +52,31 @@ export default new Vuex.Store({
                 1: '健身房',
                 2: '游泳池',
                 3: '篮球场',
-                4: '儿童乐园'
+                4: '儿童乐园',
+                5: '无'
             },
             1: {
                 1: 'Gym',
                 2: 'Swimming Poll',
                 3: 'Basketball Court',
-                4: 'Kids Playground'
+                4: 'Kids Playground',
+                5: 'N/A'
             }
         },
         usedArr: {
             0: {
-                1: '公寓',
+                1: '住宅',
                 2: '办公室',
                 3: '旺铺',
-                4: '土地'
+                4: '土地',
+                5: '仓库'
             },
             1: {
-                1: 'Condo',
+                1: 'Residential',
                 2: 'Office',
                 3: 'Commercial Space',
-                4: 'Land'
+                4: 'Land',
+                5: 'Warehouse'
             }
         },
         faceToArr: {

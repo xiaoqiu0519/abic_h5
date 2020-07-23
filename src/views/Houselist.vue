@@ -38,7 +38,7 @@
           <span>{{usedname}}</span>
           <img src="../assets/commom/xiala2.png" alt="" srcset="">
         </div>
-        <div class="con" style="width:1.3rem;" v-if="navindex == 2">
+        <div class="con" style="min-width:1.3rem;" v-if="navindex == 2">
           <img class="before" src="../assets/commom/up(2).png" alt="" srcset="">
           <div>
             <p :class="{usedclass:usedindex==0}" @click="clickused(getlanguage == 0 ? '用途' : 'Category',0)">{{getlanguage == 0 ? '用途' : 'Category'}}</p>
@@ -48,10 +48,10 @@
       </div>
       <div class="nav">
         <div class="title" @click.stop="navindex = 3">
-          <span>{{layoutname}}</span>
+          <span :class="{disabled: usedindex != 1}">{{layoutname}}</span>
           <img src="../assets/commom/xiala2.png" alt="" srcset="">
         </div>
-        <div class="con" style="width:1.3rem;" v-if="navindex == 3">
+        <div class="con" style="min-width:1.3rem;" v-if="navindex == 3 && usedindex == 1">
           <img class="before" src="../assets/commom/up(2).png" alt="" srcset="">
           <div>
             <p :class="{usedclass:layoutindex==0}" @click="clicklayout(getlanguage == 0 ? '户型' : 'Type',0)">{{getlanguage == 0 ? '户型' : 'Type'}}</p>
@@ -64,7 +64,7 @@
           <span>{{pricename}}</span>
           <img src="../assets/commom/xiala2.png" alt="" srcset="">
         </div>
-        <div class="con conright" style="width:1.3rem;" v-if="navindex == 4">
+        <div class="con conright" style="min-width:1.3rem;" v-if="navindex == 4">
           <img class="before" src="../assets/commom/up(2).png" alt="" srcset="">
           <div>
             <p :class="{usedclass:priceindex==0}" @click="clickPrice(getlanguage == 0 ? '价格' : 'Price',0)">{{getlanguage == 0 ? '价格' : 'Price'}}</p>
@@ -113,14 +113,24 @@ export default {
           2:'30,000-50,000',
           3:'50,000-70,000',
           4:'70,000-100,000',
-          5:'100,000以上 '
+          5:'100,000以上 ',
+          6:'5,000,000以下',
+          7:'5,000,000-10,000,000',
+          8:'10,000,000-15,000,000',
+          9:'15,000,000-20,000,000',
+          10:'20,000,000以上'
         },
         1:{
           1:'30k below',
           2:'30-50k',
           3:'50-70k',
           4:'70-100k',
-          5:'100k above' 
+          5:'100k above' ,
+          6:'5,000K below',
+          7:'5,000K-10,000K',
+          8:'10,000K-15,000K',
+          9:'15,000K-20,000K',
+          10:'20,000K above'
         }    
       }
     }
@@ -135,20 +145,49 @@ export default {
     this.sesssearchparams = sessionStorage.getItem('sesssearchparams') ? 
       JSON.parse(sessionStorage.getItem('sesssearchparams')) : ''
     let priceindex = sessionStorage.getItem('priceindex')  
-    // this.usedname = this.getlanguage == 0 ? '用途' : 'Category';
-    // this.layoutname = this.getlanguage ==0 ? '户型' : 'Type';
-    // this.pricename = this.getlanguage ==0 ? '价格' : 'Price';
-    // this.cityaddressname = this.getlanguage == 0? "城市" : "City";
-
-    
+    if(this.housetype == 2){
+      this.priceArr = {
+        0:{
+          1:'30,000以下',
+          2:'30,000-50,000',
+          3:'50,000-70,000',
+          4:'70,000-100,000',
+          5:'100,000以上 ',
+        },
+        1:{
+          1:'30k below',
+          2:'30-50k',
+          3:'50-70k',
+          4:'70-100k',
+          5:'100k above' ,
+        }
+      }
+    }else{
+      this.priceArr = {
+        0:{
+          6:'5,000,000以下',
+          7:'5,000,000-10,000,000',
+          8:'10,000,000-15,000,000',
+          9:'15,000,000-20,000,000',
+          10:'20,000,000以上'
+        },
+        1:{
+          6:'5,000K below',
+          7:'5,000K-10,000K',
+          8:'10,000K-15,000K',
+          9:'15,000K-20,000K',
+          10:'20,000K above'
+        }
+      }
+    }
     this.getcity();
     if(this.sesssearchparams.used){
       this.usedname = this.usedArr[this.getlanguage][this.sesssearchparams.used]
     }else{
       this.usedname = this.getlanguage == 0 ? '用途' : 'Category';
     }
-    if(this.sesssearchparams.type){
-      this.layoutname = this.layoutArr[this.getlanguage][this.sesssearchparams.type]
+    if(this.sesssearchparams.layout){
+      this.layoutname = this.layoutArr[this.getlanguage][this.sesssearchparams.layout]
     }else{
       this.layoutname = this.getlanguage ==0 ? '户型' : 'Type';
     }
@@ -160,12 +199,17 @@ export default {
     }
     this.cityname = '不限';
     this.searchparams = {status:'1',type:this.housetype}
-    for (const key in this.sesssearchparams) {this.searchparams[key] = this.sesssearchparams[key]}
+    for (const key in this.sesssearchparams) {
+      this.searchparams[key] = this.sesssearchparams[key]
+    }
     this.gethouselist();
   },
   methods:{
     gethouselist(){
       this.loadingflag(true)
+      if(this.searchparams.used != 1){
+        delete this.searchparams.layout
+      }
       this.$post('/house/houselist',{
         params:JSON.stringify(this.searchparams)
       }).then((res)=>{
@@ -253,6 +297,21 @@ export default {
         case "5":
           this.searchparams.price = {min:100000,max:NaN}
         break;
+        case "6":
+          this.searchparams.price = {min:0,max:5000000}
+        break;
+        case "7":
+          this.searchparams.price = {min:5000000,max:10000000}
+        break;
+        case "8":
+          this.searchparams.price = {min:10000000,max:15000000}
+        break;
+        case "9":
+          this.searchparams.price = {min:15000000,max:20000000}
+        break;
+        case "10":
+          this.searchparams.price = {min:20000000,max:NaN}
+        break;
       }
       this.gethouselist();
     },
@@ -290,6 +349,8 @@ export default {
         white-space: nowrap;
       img
         width 0.12rem;
+      .disabled
+        color #aaa !important  
      
     .con
       width auto;
