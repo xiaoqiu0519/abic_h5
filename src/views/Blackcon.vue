@@ -7,9 +7,7 @@
         <div class="swiper-pagination" slot="pagination"></div>
       </Swiper>
     </div>
-    <div class="con">
-        {{blackdetail.content}}
-    </div>
+    <div class="black_con" v-html="blackdetail.content"></div>
   </div>
 </template>
 <script>
@@ -56,10 +54,6 @@ export default {
     img
       width 100%;
       max-height 2.6rem;
-  .con
-    width 94%;
-    margin 0 auto;
-    line-height 0.2rem;  
 </style>
 <style lang="stylus">
   .blackimg
@@ -68,4 +62,14 @@ export default {
       height 2.6rem;
       justify-content center;
       align-items center;
+  .black_con
+    width 94%;
+    margin 0 auto;
+    line-height 0.2rem;  
+    h3
+      margin 0.2rem 0;
+      font-size 0.14rem;
+      font-weight 900;
+    p
+      margin  0.1rem 0;
 </style>

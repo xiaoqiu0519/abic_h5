@@ -210,6 +210,7 @@ export default {
       if(this.searchparams.used != 1){
         delete this.searchparams.layout
       }
+      
       this.$post('/house/houselist',{
         params:JSON.stringify(this.searchparams)
       }).then((res)=>{

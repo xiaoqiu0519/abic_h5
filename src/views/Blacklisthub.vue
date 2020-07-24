@@ -106,7 +106,7 @@ export default {
                   updateimg:'Update Img',
                   telphpne:'telphone',
                   placeholdertel:'Please enter your phone',
-                  commitbtn:'Submission'
+                  commitbtn:'Submit'
               }
           }
       }
@@ -162,6 +162,11 @@ export default {
             this.tiptext = this.conformtxt[this.getlanguage].placeholdercontent;
             return;
           }
+          if(!this.formData || !this.formData.get('images')){
+            this.alertflag = true;
+            this.tiptext = this.getlanguage == 0 ? "请上传图片" : "Please select photos"
+            return;
+          }
           if(!this.telphone){
             this.alertflag = true;
             this.tiptext = this.conformtxt[this.getlanguage].placeholdertel;
@@ -177,7 +182,7 @@ export default {
                this.loadingflag(false)
               if(res.error == '0000'){
                   this.alertflag = true;
-                  this.tiptext = '提交成功，待后台审核'
+                  this.tiptext = this.getlanguage == 0 ? "提交成功，待后台审核" : "submit successfully"
                   this.initdata();
               }
           })
