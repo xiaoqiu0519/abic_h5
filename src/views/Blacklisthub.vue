@@ -8,7 +8,7 @@
         </div>
         <div class="conlist" v-if="navindex == 0">
             <div v-if="tabledata[getlanguage] && tabledata[getlanguage].length !=0">
-                <div class="list" v-for="(list,index) in tabledata[getlanguage]" :key="index" @click="goblackcon(list)">
+                <div class="list" v-for="(list,index) in tabledata[getlanguage].sort(compare('top'))" :key="index" @click="goblackcon(list)">
                     <div class="title">
                         <span class="name">{{list.title}}</span>
                         <span class="time">{{list.createtime}}</span>
@@ -127,10 +127,17 @@ export default {
         }).then((res)=>{
             this.loadingflag(false)
             if(res.error == '0000'){
-                this.tabledata = res.data;
+                this.tabledata = res.data
             }
         });
       },
+      compare (property) {
+        return (a, b) => {
+            var m = a[property]
+            var n = b[property]
+            return n - m
+        }
+        },
       getMsgForm(data){
         this.formData = data
       },

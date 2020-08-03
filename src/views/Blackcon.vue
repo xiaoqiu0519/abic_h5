@@ -69,7 +69,8 @@ export default {
     h3
       margin 0.2rem 0;
       font-size 0.14rem;
-      font-weight 900;
+      font-weight 900 !important;
+      color black;
     p
       margin  0.1rem 0;
 </style>
