@@ -20,7 +20,7 @@
                 </li>    
                 <li>
                     <span class="type">{{context.housedesc[getlanguage].layout}}：</span>
-                    <span class="spec" v-if="usedArr[getlanguage][housedetaildata.used] == 1"> {{layoutArr[getlanguage][housedetaildata.layout]}}</span>
+                    <span class="spec" v-if="housedetaildata.used == 1"> {{layoutArr[getlanguage][housedetaildata.layout]}}</span>
                     <span v-else>--</span>
                 </li>
                 <li>

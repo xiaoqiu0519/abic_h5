@@ -8,7 +8,7 @@
         </div>
         <div class="conlist" v-if="navindex == 0">
             <div v-if="tabledata[getlanguage] && tabledata[getlanguage].length !=0">
-                <div class="list" v-for="(list,index) in tabledata[getlanguage].sort(compare('top'))" :key="index" @click="goblackcon(list)">
+                <div class="list" v-for="(list,index) in tabledata[getlanguage]" :key="index" @click="goblackcon(list)">
                     <div class="title">
                         <span class="name">{{list.title}}</span>
                         <span class="time">{{list.createtime}}</span>
@@ -28,11 +28,11 @@
         <div class="conform" v-else>
             <div class="inputdiv">
                 <span>{{conformtxt[getlanguage].title}}：</span>
-                <input type="text" v-model="title" :placeholder="conformtxt[getlanguage].placeholdertitle">
+                <input type="text" name="title" v-model="title" :placeholder="conformtxt[getlanguage].placeholdertitle">
             </div>
             <div class="inputarea">
                 <span>{{conformtxt[getlanguage].content}}：</span>
-                <textarea name="" v-model="content" id="" cols="30" rows="10" 
+                <textarea name="content" v-model="content" id="" cols="30" rows="10" 
                     :placeholder="conformtxt[getlanguage].placeholdercontent"></textarea>
             </div>
             <div class="updata">
@@ -41,7 +41,7 @@
             </div>
             <div class="inputdiv">
                 <span>{{conformtxt[getlanguage].telphpne}}：</span>
-                <input type="text" v-model="telphone" :placeholder="conformtxt[getlanguage].placeholdertel">
+                <input name="telphone" type="text" v-model="telphone" :placeholder="conformtxt[getlanguage].placeholdertel">
             </div>
             <div class="btn" @click="surebtn()">{{conformtxt[getlanguage].commitbtn}}</div>
         </div>
@@ -60,6 +60,7 @@ import Header from '../components/header'
 import UpFile from '../components/upfile'
 import Nodata from '../components/nodata'
 export default {
+  name:'ddd',  
   computed:{
     ...mapGetters(['getlanguage'])
   },
@@ -121,13 +122,15 @@ export default {
   },
   methods:{
       getblacklist(){
-          this.loadingflag(true)
+        this.loadingflag(true)
         this.$post('/black/getlist',{
             status:'1'
         }).then((res)=>{
             this.loadingflag(false)
             if(res.error == '0000'){
-                this.tabledata = res.data
+                res.data.map(ele=>{
+                    this.tabledata.push(ele.sort(this.compare('top')))
+                })
             }
         });
       },
