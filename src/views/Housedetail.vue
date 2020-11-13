@@ -107,6 +107,7 @@ export default {
     return{
       housedetail:{0:'房屋详情',1:'Details'},
       housedetaildata:'',   
+      housedId:'',
       city:'',
       swiperOption: {//swiper3
         pagination: {
@@ -122,12 +123,27 @@ export default {
     Swiper,
     SwiperSlide
   },
-  mounted(){    
-    this.housedetaildata = sessionStorage.getItem('sesshousedetail') ? JSON.parse(sessionStorage.getItem('sesshousedetail')) : ''
+  mounted(){   
+    this.housedId = this.$route.query && this.$route.query.id
+    if(this.housedId){
+        this.gethousedetail(this.housedId)
+    }else{
+        this.$router.push('/')
+    }
+    //this.housedetaildata = sessionStorage.getItem('sesshousedetail') ? JSON.parse(sessionStorage.getItem('sesshousedetail')) : ''
     let cityname = sessionStorage.getItem('cityparams') ? JSON.parse(sessionStorage.getItem('cityparams')).cityname : ''
     let addressname = sessionStorage.getItem('cityparams') ? JSON.parse(sessionStorage.getItem('cityparams')).addressname : ''
     this.city = cityname +  '  ' + addressname
-  }
+  },
+  methods: {
+     gethousedetail(id){
+        this.$post('/house/gethousedetail',{
+            id:id
+        }).then(res=>{
+            this.housedetaildata = res.data[this.getlanguage][0]
+        })
+     } 
+  },
 }
 </script>
 <style lang="stylus" scoped>

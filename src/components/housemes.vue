@@ -50,13 +50,10 @@ export default {
       this.$router.push('/index')
     }
   },
-  mounted(){
-    // console.log(this.searchparams)
-  },
   methods:{
     gohouserdetail(list){
-      this.$router.push('/housedetail');
-      sessionStorage.setItem('sesshousedetail',JSON.stringify(list))
+      this.$router.push('/housedetail?id='+list.id);
+      // sessionStorage.setItem('sesshousedetail',JSON.stringify(list))
       sessionStorage.setItem('sesssearchparams',JSON.stringify(this.searchparams))
     }
   }
